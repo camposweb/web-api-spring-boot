@@ -1,9 +1,19 @@
 import type { Metadata } from 'next'
-
+import { Roboto } from 'next/font/google'
 import './globals.css'
+import ReactQueryProvider from './ReactQueryProvider'
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-roboto',
+})
 
 export const metadata: Metadata = {
-  title: 'Web API Spring Boot',
+  title: {
+    template: '%s |Web API Spring Boot',
+    default: 'Web API Spring Boot',
+  },
   description: 'Bootcamp',
 }
 
@@ -14,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`antialiased`}>{children}</body>
+      <body className={`${roboto.variable} antialiased`}>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   )
 }
