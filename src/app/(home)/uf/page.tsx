@@ -1,4 +1,3 @@
-import { getListarUfsQueryKey } from '@/http/generated/uf/uf'
 import {
   dehydrate,
   HydrationBoundary,
@@ -15,11 +14,10 @@ export const metadata: Metadata = {
 export default async function Uf() {
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery({
-    queryKey: getListarUfsQueryKey(),
-    queryFn: GetUfs,
+  /*  await queryClient.prefetchQuery({
+    queryKey: ['ufs'],
   })
-
+ */
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <>

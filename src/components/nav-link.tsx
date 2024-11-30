@@ -11,7 +11,7 @@ export function NavLink({ ...props }: NavLinkProps) {
     <Link
       {...props}
       data-active={pathname === props.href}
-      className="font-roboto flex items-center justify-center gap-1.5 rounded-md p-2 text-xl font-medium text-primary hover:bg-primary hover:text-white data-[active=true]:bg-primary data-[active=true]:text-white"
+      className="flex items-center justify-center gap-1.5 rounded-md p-2 font-roboto text-xl font-medium text-primary hover:bg-primary hover:text-white data-[active=true]:bg-primary data-[active=true]:text-white"
     />
   )
 }

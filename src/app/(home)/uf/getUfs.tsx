@@ -1,6 +1,7 @@
 'use client'
-import { ConfirmDelete } from '@/components/confirm-delete'
-import { Button } from '@/components/ui/button'
+import { ConfirmDelete } from '@/components/uf/confirm-delete'
+import { EditUf } from '@/components/uf/edit-uf'
+import { Badge } from '@/components/ui/badge'
 import {
   Table,
   TableBody,
@@ -10,10 +11,15 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useListarUfs } from '@/http/generated/uf/uf'
-import { Pencil } from 'lucide-react'
+import { Dot } from 'lucide-react'
 
 export default function GetUfs() {
-  const { data: ufs } = useListarUfs()
+  /*  const { data: ufss } = useQuery({
+    queryKey: ['ufs'],
+    queryFn: () => listarUfs(),
+  }) */
+
+  const { data: ufs } = useListarUfs({}, { query: { queryKey: ['ufs'] } })
 
   return (
     <div>
@@ -23,27 +29,46 @@ export default function GetUfs() {
         <TableHeader>
           <TableRow>
             <TableHead className="w-30">Código</TableHead>
+            <TableHead>Sigla</TableHead>
             <TableHead>Nome</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="text-right">Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {ufs?.data.map((uf) => (
-            <TableRow key={uf.codigoUf}>
-              <TableCell className="items-center justify-center">
-                {uf.codigoUf}
-              </TableCell>
-              <TableCell>{uf.nome}</TableCell>
-              <TableCell>{uf.status}</TableCell>
-              <TableCell className="flex justify-end gap-4 text-left">
-                <Button title="Editar">
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <ConfirmDelete codigoUf={uf.codigoUf} nome={uf.nome} />
-              </TableCell>
-            </TableRow>
-          ))}
+          {ufs &&
+            ufs.data.map((uf) => (
+              <TableRow key={uf.codigoUf}>
+                <TableCell className="items-center justify-center">
+                  {uf.codigoUf}
+                </TableCell>
+                <TableCell>{uf.sigla}</TableCell>
+                <TableCell>{uf.nome}</TableCell>
+                <TableCell>
+                  {uf.status === 1 ? (
+                    <Badge className="bg-green-500 hover:bg-green-500">
+                      ATIVADO
+                    </Badge>
+                  ) : (
+                    <Badge variant="destructive" className="hover:bg-red-600">
+                      DESATIVADO
+                    </Badge>
+                  )}
+                </TableCell>
+                <TableCell className="flex justify-end gap-4 text-left">
+                  <EditUf
+                    codigoUf={uf.codigoUf}
+                    siglaUf={uf.sigla}
+                    nomeUf={uf.nome}
+                    statusUf={uf.status}
+                  />
+                  <ConfirmDelete
+                    codigo={uf.codigoUf as number}
+                    nome={uf.nome as string}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>
