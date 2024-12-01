@@ -1,6 +1,7 @@
 'use client'
 import { ConfirmDelete } from '@/components/uf/confirm-delete'
 import { EditUf } from '@/components/uf/edit-uf'
+import { SaveUf } from '@/components/uf/save-uf'
 import { Badge } from '@/components/ui/badge'
 import {
   Table,
@@ -11,7 +12,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useListarUfs } from '@/http/generated/uf/uf'
-import { Dot } from 'lucide-react'
 
 export default function GetUfs() {
   /*  const { data: ufss } = useQuery({
@@ -24,6 +24,7 @@ export default function GetUfs() {
   return (
     <div>
       <h1 className="text-2xl text-black">Info Uf</h1>
+      <SaveUf />
 
       <Table className="">
         <TableHeader>

@@ -1,5 +1,4 @@
-'use client'
-import { Pencil } from 'lucide-react'
+import { z } from 'zod'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -9,6 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Form,
   FormControl,
@@ -18,25 +19,14 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Input } from '../ui/input'
 import { Switch } from '../ui/switch'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { atualizarUf } from '@/http/generated/uf/uf'
+import { cadastrarUf } from '@/http/generated/uf/uf'
 import { toast } from '@/hooks/use-toast'
 import { useState } from 'react'
 
-export interface EditUfProps {
-  codigoUf?: number
-  siglaUf?: string
-  nomeUf?: string
-  statusUf?: number
-}
-
-const editUfSchema = z.object({
-  codigo: z.number().min(1, { message: 'Dever conter o codigoUf' }),
+const saveUfSchema = z.object({
   sigla: z.string().regex(/^[a-zA-Z\s]+$/, {
     message: 'Dever conter apenas letras',
   }),
@@ -46,36 +36,30 @@ const editUfSchema = z.object({
   status: z.boolean(),
 })
 
-type EditUfSchema = z.infer<typeof editUfSchema>
+type SaveUfSchema = z.infer<typeof saveUfSchema>
 
-export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
+export function SaveUf() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  // const statusString = status
-  const statusBoolean =
-    statusUf === 1 ? true : statusUf === 2 ? false : undefined
 
-  const form = useForm<EditUfSchema>({
-    resolver: zodResolver(editUfSchema),
+  const formSaveUf = useForm<SaveUfSchema>({
+    resolver: zodResolver(saveUfSchema),
     defaultValues: {
-      codigo: codigoUf,
-      sigla: siglaUf,
-      nome: nomeUf,
-      // statusUf: statusString,
-      status: statusBoolean,
+      sigla: '',
+      nome: '',
+      status: true,
     },
   })
 
   const queryClient = useQueryClient()
 
-  const { mutateAsync: atualizarUfFn } = useMutation({
-    mutationFn: atualizarUf,
+  const { mutateAsync: cadastrarUfFn } = useMutation({
+    mutationFn: cadastrarUf,
     async onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ['ufs'],
       })
       toast({
-        title: 'Sucesso',
-        description: 'UF atualizada com sucesso',
+        description: 'UF cadastrado com sucesso',
       })
     },
   })
@@ -84,13 +68,15 @@ export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
   async function onSubmit(data: any) {
     try {
       data.status = data.status ? 1 : 2
-      await atualizarUfFn({
-        codigoUf: data.codigo,
+      await cadastrarUfFn({
         sigla: data.sigla,
         nome: data.nome,
         status: data.status,
       })
+      // formSaveUf.reset()
       setIsDialogOpen(false)
+      formSaveUf.reset()
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({
@@ -104,31 +90,16 @@ export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button title="Editar Uf">
-          <Pencil className="h-4 w-4" />
-        </Button>
+        <Button className="text-xl">Cadastrar UF</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Editar UF {nomeUf}</DialogTitle>
-          <DialogDescription>Painel de edição de UF</DialogDescription>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+          <DialogTitle>Cadastrar UF</DialogTitle>
+          <DialogDescription>Cadastro</DialogDescription>
+          <Form {...formSaveUf}>
+            <form onSubmit={formSaveUf.handleSubmit(onSubmit)}>
               <FormField
-                control={form.control}
-                name="codigo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Código UF</FormLabel>
-                    <FormControl>
-                      <Input disabled {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
+                control={formSaveUf.control}
                 name="sigla"
                 render={({ field }) => (
                   <FormItem>
@@ -141,7 +112,7 @@ export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
                 )}
               />
               <FormField
-                control={form.control}
+                control={formSaveUf.control}
                 name="nome"
                 render={({ field }) => (
                   <FormItem>
@@ -154,7 +125,7 @@ export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
                 )}
               />
               <FormField
-                control={form.control}
+                control={formSaveUf.control}
                 name="status"
                 render={({ field }) => (
                   <FormItem>

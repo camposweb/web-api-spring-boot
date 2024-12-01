@@ -47,7 +47,7 @@ export function ConfirmDelete({ codigo, nome }: ConfirmDeleteProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">
+        <Button title="Deletar Uf" variant="destructive">
           <Trash2 className="h-4 w-4" />
         </Button>
       </AlertDialogTrigger>
