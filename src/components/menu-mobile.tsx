@@ -1,6 +1,13 @@
 import { Menu } from 'lucide-react'
 import { Button } from './ui/button'
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from './ui/sheet'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet'
 import { NavLink } from './nav-link'
 import { useState } from 'react'
 
@@ -15,12 +22,15 @@ export function MenuMobile() {
     <div className="md:hidden">
       <Sheet open={isOpenSheet} onOpenChange={setIsOpenSheet}>
         <SheetTrigger asChild>
-          <Button className="bg-transparent hover:bg-transparent active:bg-transparent">
-            <Menu className="flex text-black" />
+          <Button className="flex items-center justify-center bg-slate-200 hover:bg-slate-200 active:bg-slate-200">
+            <Menu className="text-black" />
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <SheetHeader>Menu</SheetHeader>
+          <SheetHeader>
+            <SheetTitle>Menu</SheetTitle>
+            <SheetDescription className="sr-only">Menu</SheetDescription>
+          </SheetHeader>
           <div className="flex flex-col gap-4">
             <NavLink href={'/'} onClick={handleOpenSheet}>
               Home
