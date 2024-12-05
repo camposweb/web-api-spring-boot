@@ -53,10 +53,13 @@ export default function Municipio() {
       <div className="space-y-3">
         <div className="rounded-md border">
           <Table className="">
-            <TableHeader>
+            <TableHeader className="">
               <TableRow>
-                <TableHead className="w-30 font-bold text-black">
-                  Código
+                <TableHead className="font-bold text-black">
+                  Código Município
+                </TableHead>
+                <TableHead className="font-bold text-black">
+                  Código UF
                 </TableHead>
                 <TableHead className="font-bold text-black">UF</TableHead>
                 <TableHead className="font-bold text-black">Nome</TableHead>
@@ -72,6 +75,9 @@ export default function Municipio() {
                   <TableRow key={municipio.codigoMunicipio}>
                     <TableCell className="items-center justify-center">
                       {municipio.codigoMunicipio}
+                    </TableCell>
+                    <TableCell className="items-center justify-center">
+                      {municipio.codigoUf}
                     </TableCell>
                     <TableCell className="items-center justify-center">
                       {ufs?.data
