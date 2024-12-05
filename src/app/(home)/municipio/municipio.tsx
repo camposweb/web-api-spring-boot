@@ -48,6 +48,8 @@ export default function Municipio() {
     <div className="mb-10 flex flex-col gap-4 px-4 pb-8">
       <h1 className="text-2xl font-bold text-black">Município</h1>
 
+      <SaveMunicipio />
+
       <div className="space-y-3">
         <div className="rounded-md border">
           <Table className="">
