@@ -2,6 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Badge } from '../ui/badge'
@@ -15,7 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select'
-import { useRouter, useSearchParams } from 'next/navigation'
 
 interface GetUfFilterProps {
   codigo?: number
@@ -69,10 +69,9 @@ const getUfFilterSchema = z.object({
 type GetUfFilterSchema = z.infer<typeof getUfFilterSchema>
 
 export function GetUfFilter() {
-
   const router = useRouter()
-  const searchParams = useSearchParams()
-  
+  // const searchParams = useSearchParams()
+
   const formFilter = useForm<GetUfFilterSchema>({
     resolver: zodResolver(getUfFilterSchema),
     defaultValues: {
@@ -107,12 +106,12 @@ export function GetUfFilter() {
       }
       const query = new URLSearchParams()
 
-    // Adiciona apenas os filtros com valores definidos
-    Object.entries(data).forEach(([key, value]) => {
-      if (value && value !== 'all') query.append(key, value)
-    })
+      // Adiciona apenas os filtros com valores definidos
+      Object.entries(data).forEach(([key, value]) => {
+        if (value && value !== 'all') query.append(key, value)
+      })
 
-    router.push(`?${query.toString()}`)
+      router.push(`?${query.toString()}`)
 
       // Normaliza os campos para garantir que null seja transformado em undefined
       const normalizedData = {
@@ -154,8 +153,10 @@ export function GetUfFilter() {
 
   return (
     <div className="flex flex-col gap-4 rounded-md border p-4 md:flex-row md:items-center">
-      <div className="">
-        <h1 className="text-base font-bold">Filtros: </h1>
+      <div className="flex justify-start md:justify-normal">
+        <h1 className="justify-start text-base font-bold md:justify-normal">
+          Filtros:{' '}
+        </h1>
       </div>
       <Form {...formFilter}>
         <form
@@ -230,7 +231,7 @@ export function GetUfFilter() {
             name="status"
             render={({ field }) => (
               <FormItem>
-                <FormControl>
+                <FormControl className="flex w-5">
                   <Select
                     {...field}
                     value={

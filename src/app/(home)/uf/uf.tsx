@@ -1,6 +1,6 @@
 'use client'
 import { PaginationTable } from '@/components/pagination-table'
-import { ConfirmDelete } from '@/components/uf/confirm-delete'
+import { ConfirmDeleteUf } from '@/components/uf/confirm-delete-uf'
 import { EditUf } from '@/components/uf/edit-uf'
 import { GetUfFilter } from '@/components/uf/get-uf-filter'
 import { SaveUf } from '@/components/uf/save-uf'
@@ -13,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ListaUfDTO } from '@/http/generated/api.schemas'
 import { useListarUfs } from '@/http/generated/uf/uf'
 import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -31,7 +30,7 @@ export default function Uf() {
 
   const queryClient = useQueryClient()
 
-  //const filters = queryClient.getQueryData<ListaUfDTO>(['ufs-filters']) || {}
+  // const filters = queryClient.getQueryData<ListaUfDTO>(['ufs-filters']) || {}
 
   const filters = {
     codigoUf: searchParams.get('codigoUf')
@@ -44,7 +43,7 @@ export default function Uf() {
       if (statusParam === '1') return 1
       if (statusParam === '2') return 2
       return undefined
-    })()
+    })(),
   }
   const { data: ufs } = useListarUfs(filters, {
     query: { queryKey: ['ufs', filters] },
@@ -93,11 +92,15 @@ export default function Uf() {
           <Table className="">
             <TableHeader>
               <TableRow>
-                <TableHead className="w-30 text-black font-bold">Código</TableHead>
-                <TableHead className='text-black font-bold'>Sigla</TableHead>
-                <TableHead className='text-black font-bold'>Nome</TableHead>
-                <TableHead className='text-black font-bold'>Status</TableHead>
-                <TableHead className="text-right text-black font-bold">Ações</TableHead>
+                <TableHead className="w-30 font-bold text-black">
+                  Código
+                </TableHead>
+                <TableHead className="font-bold text-black">Sigla</TableHead>
+                <TableHead className="font-bold text-black">Nome</TableHead>
+                <TableHead className="font-bold text-black">Status</TableHead>
+                <TableHead className="text-right font-bold text-black">
+                  Ações
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -130,7 +133,7 @@ export default function Uf() {
                         nomeUf={uf.nome}
                         statusUf={uf.status}
                       />
-                      <ConfirmDelete
+                      <ConfirmDeleteUf
                         codigo={uf.codigoUf as number}
                         nome={uf.nome as string}
                       />

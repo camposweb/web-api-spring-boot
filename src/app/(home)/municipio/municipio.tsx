@@ -1,5 +1,6 @@
 'use client'
 
+import { ConfirmDeleteMunicipio } from '@/components/municipio/confirm-delete-municipio'
 import { SaveMunicipio } from '@/components/municipio/save-municipio'
 import { PaginationTable } from '@/components/pagination-table'
 import { Badge } from '@/components/ui/badge'
@@ -13,7 +14,6 @@ import {
 } from '@/components/ui/table'
 import { useListarMunicipios } from '@/http/generated/municipio/municipio'
 import { useListarUfs } from '@/http/generated/uf/uf'
-import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
 export default function Municipio() {
@@ -77,7 +77,6 @@ export default function Municipio() {
                       {ufs?.data
                         .filter((uf) => uf.codigoUf === municipio.codigoUf)
                         .map((uf) => uf.sigla)}
-                      {/* {municipio.codigoUf} */}
                     </TableCell>
                     <TableCell>{municipio.nome}</TableCell>
                     <TableCell>
@@ -100,11 +99,11 @@ export default function Municipio() {
                         siglaUf={municipio.sigla}
                         nomeUf={municipio.nome}
                         statusUf={municipio.status}
-                      />
-                      <ConfirmDelete
-                        codigo={municipio.codigoUf as number}
-                        nome={municipio.nome as string}
                       /> */}
+                      <ConfirmDeleteMunicipio
+                        codigo={municipio.codigoMunicipio as number}
+                        nome={municipio.nome as string}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

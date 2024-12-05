@@ -90,7 +90,13 @@ export function SaveMunicipio() {
         status: data.status,
       })
       toast({
-        description: 'Município cadastrado com sucesso',
+        description: (
+          <div>
+            <p>
+              Município <strong>{data.nome}</strong> cadastrado com sucesso
+            </p>
+          </div>
+        ),
       })
       setIsDialogOpen(false)
       formSaveMunicipio.reset()

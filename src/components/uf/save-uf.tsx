@@ -46,7 +46,12 @@ const saveUfSchema = z.object({
     .regex(/^[a-zA-Zá-úÁ-ÚçÇ\s]+$/, {
       message: 'Campo obrigatórioa e deve conter apenas letras',
     }),
-  status: z.boolean(),
+  status: z.union([z.boolean(), z.number()]).transform((val) => {
+    if (typeof val === 'boolean') {
+      return val ? 1 : 2
+    }
+    return val
+  }),
 })
 
 type SaveUfSchema = z.infer<typeof saveUfSchema>
@@ -59,7 +64,7 @@ export function SaveUf() {
     defaultValues: {
       sigla: '',
       nome: '',
-      status: true,
+      status: 1,
     },
   })
 
@@ -87,7 +92,7 @@ export function SaveUf() {
   })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async function onSubmit(data: any) {
+  async function onSubmit(data: SaveUfSchema) {
     try {
       data.status = data.status ? 1 : 2
       await cadastrarUfFn({
@@ -132,16 +137,19 @@ export function SaveUf() {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Cadastrar UF</DialogTitle>
-            <DialogDescription>Cadastro</DialogDescription>
+            <DialogTitle className="flex">Cadastrar UF</DialogTitle>
+            <DialogDescription className="flex">Cadastro</DialogDescription>
             <Form {...formSaveUf}>
-              <form onSubmit={formSaveUf.handleSubmit(onSubmit)}>
+              <form
+                onSubmit={formSaveUf.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <FormField
                   control={formSaveUf.control}
                   name="sigla"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Sigla UF</FormLabel>
+                      <FormLabel className="flex">Sigla UF</FormLabel>
                       <FormControl>
                         <Input {...field} placeholder="Digite a sigla" />
                       </FormControl>
@@ -154,7 +162,7 @@ export function SaveUf() {
                   name="nome"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nome UF</FormLabel>
+                      <FormLabel className="flex">Nome UF</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -167,11 +175,13 @@ export function SaveUf() {
                   name="status"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Status UF</FormLabel>
+                      <FormLabel className="flex">Status UF</FormLabel>
                       <FormControl>
                         <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
+                          checked={field.value === 1} // Converte para boolean (true se ativo)
+                          onCheckedChange={(checked) =>
+                            field.onChange(checked ? 1 : 2)
+                          } // Atualiza com 1 ou 2
                           className="flex data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-600"
                         />
                       </FormControl>
