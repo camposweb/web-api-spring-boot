@@ -1,28 +1,21 @@
-import { getListarUfsQueryKey } from '@/http/generated/uf/uf'
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query'
-import GetUfs from '../uf/getUfs'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Pessoa',
-  description: 'Lista de Ufs',
+  description: 'Lista de Pessoas',
 }
 
-export default async function Pessoa() {
+export default async function PagePessoa() {
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
-    queryKey: getListarUfsQueryKey(),
-    queryFn: GetUfs,
+    queryKey: ['pessoas'],
   })
 
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      {/* <GetUfs /> */}
-    </HydrationBoundary>
-  )
+  return <HydrationBoundary state={dehydrate(queryClient)}></HydrationBoundary>
 }
