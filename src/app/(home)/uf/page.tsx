@@ -4,24 +4,24 @@ import {
   QueryClient,
 } from '@tanstack/react-query'
 import { Metadata } from 'next'
-import GetUfs from './getUfs'
+import Uf from './uf'
 
 export const metadata: Metadata = {
   title: 'Uf',
   description: 'Lista de Ufs',
 }
 
-export default async function Uf() {
+export default async function PageUf() {
   const queryClient = new QueryClient()
 
-  /*  await queryClient.prefetchQuery({
+  await queryClient.prefetchQuery({
     queryKey: ['ufs'],
   })
- */
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <>
-        <GetUfs />
+        <Uf />
       </>
     </HydrationBoundary>
   )

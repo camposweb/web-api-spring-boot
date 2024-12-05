@@ -2,6 +2,7 @@
 import { PaginationTable } from '@/components/pagination-table'
 import { ConfirmDelete } from '@/components/uf/confirm-delete'
 import { EditUf } from '@/components/uf/edit-uf'
+import { GetUfFilter } from '@/components/uf/get-uf-filter'
 import { SaveUf } from '@/components/uf/save-uf'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -12,10 +13,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { ListaUfDTO } from '@/http/generated/api.schemas'
 import { useListarUfs } from '@/http/generated/uf/uf'
-import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-export default function GetUfs() {
+export default function Uf() {
   /*  const { data: ufss } = useQuery({
     queryKey: ['ufs'],
     queryFn: () => listarUfs(),
@@ -24,7 +28,13 @@ export default function GetUfs() {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize] = useState(10)
 
-  const { data: ufs } = useListarUfs({}, { query: { queryKey: ['ufs'] } })
+  const queryClient = useQueryClient()
+
+  const filters = queryClient.getQueryData<ListaUfDTO>(['ufs-filters']) || {}
+
+  const { data: ufs } = useListarUfs(filters, {
+    query: { queryKey: ['ufs', filters] },
+  })
 
   const items = ufs?.data || []
   const totalPages = Math.ceil(items.length / pageSize)
@@ -34,13 +44,36 @@ export default function GetUfs() {
     currentPage * pageSize,
   )
 
+  // const searchParams = useSearchParams()
+  // const status = searchParams.get('status')
+
+  /* if (isLoading) {
+    return <Loading />
+  } */
+
+  const pathname = usePathname() // Monitorando o caminho da URL
+
+  // Limpa o cache quando a página mudar
+  useEffect(() => {
+    queryClient.removeQueries({
+      queryKey: ['ufs-filters'],
+    })
+    queryClient.refetchQueries({
+      queryKey: ['ufs'],
+    })
+  }, [pathname, queryClient])
+
+  /* if (isLoading) {
+    return <Loading />
+  } */
+
   return (
-    <div className="px- mb-10 flex flex-col gap-4 pb-8">
-      <h1 className="text-2xl text-black">Info Uf</h1>
+    <div className="mb-10 flex flex-col gap-4 px-4 pb-8">
+      <h1 className="text-2xl font-bold text-black">UF</h1>
       <SaveUf />
 
       <div className="space-y-3">
-        <h1>Filtro</h1>
+        <GetUfFilter />
 
         <div className="rounded-md border">
           <Table className="">

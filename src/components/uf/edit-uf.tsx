@@ -1,5 +1,12 @@
 'use client'
+import { toast } from '@/hooks/use-toast'
+import { atualizarUf } from '@/http/generated/uf/uf'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -18,15 +25,8 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Input } from '../ui/input'
 import { Switch } from '../ui/switch'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { atualizarUf } from '@/http/generated/uf/uf'
-import { toast } from '@/hooks/use-toast'
-import { useState } from 'react'
 
 export interface EditUfProps {
   codigoUf?: number
@@ -35,10 +35,17 @@ export interface EditUfProps {
   statusUf?: number
 }
 
+interface EditDataProps {
+  codigo: number
+  sigla: string
+  nome: string
+  status: boolean | number
+}
+
 const editUfSchema = z.object({
   codigo: z.number().min(1, { message: 'Dever conter o codigoUf' }),
-  sigla: z.string().regex(/^[a-zA-Z\s]+$/, {
-    message: 'Dever conter apenas letras',
+  sigla: z.string().regex(/^[a-zA-Z]{1,3}$/, {
+    message: 'Dever conter apenas letras de no máximo 3 caracteres',
   }),
   nome: z.string().regex(/^[a-zA-Zá-úÁ-ÚçÇ\s]+$/, {
     message: 'Dever conter apenas letras',
@@ -81,7 +88,7 @@ export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
   })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async function onSubmit(data: any) {
+  async function onSubmit(data: EditDataProps) {
     try {
       data.status = data.status ? 1 : 2
       await atualizarUfFn({
