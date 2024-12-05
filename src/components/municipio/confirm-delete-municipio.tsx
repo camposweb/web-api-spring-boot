@@ -1,8 +1,5 @@
-'use client'
-import { useToast } from '@/hooks/use-toast'
-import { deletarUf } from '@/http/generated/uf/uf'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Trash2 } from 'lucide-react'
+import { confirmDeleteProps } from '../types'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,37 +10,22 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
-import { ToastAction } from '@/components/ui/toast'
+} from '../ui/alert-dialog'
+import { Button } from '../ui/button'
+import { deletarMunicipio } from '@/http/generated/municipio/municipio'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-export interface ConfirmDeleteProps {
-  codigo: number
-  nome: string
-}
-
-export function ConfirmDelete({ codigo, nome }: ConfirmDeleteProps) {
+export function ConfirmDeleteMunicipio({ codigo, nome }: confirmDeleteProps) {
   const queryClient = useQueryClient()
-  const { toast } = useToast()
 
-  const { mutateAsync: deletarUfFn } = useMutation({
-    mutationFn: deletarUf,
+  const { mutateAsync: deletarMunicipioFn } = useMutation({
+    mutationFn: deletarMunicipio,
     async onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['ufs'],
-      })
-      toast({
-        description: `Uf ${nome} deletado com sucesso`,
-        variant: 'default',
-        action: (
-          <ToastAction altText="Sair" className="">
-            Sair
-          </ToastAction>
-        ),
+        queryKey: ['municipios'],
       })
     },
   })
-
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -64,7 +46,7 @@ export function ConfirmDelete({ codigo, nome }: ConfirmDeleteProps) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              deletarUfFn({ codigoUf: codigo })
+              deletarMunicipioFn({ codigoMunicipio: codigo })
             }}
             className="bg-red-600 hover:bg-red-600/80"
           >
