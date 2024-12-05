@@ -16,10 +16,11 @@ import {
 import { ListaUfDTO } from '@/http/generated/api.schemas'
 import { useListarUfs } from '@/http/generated/uf/uf'
 import { useQueryClient } from '@tanstack/react-query'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Uf() {
+  const searchParams = useSearchParams()
   /*  const { data: ufss } = useQuery({
     queryKey: ['ufs'],
     queryFn: () => listarUfs(),
@@ -30,8 +31,21 @@ export default function Uf() {
 
   const queryClient = useQueryClient()
 
-  const filters = queryClient.getQueryData<ListaUfDTO>(['ufs-filters']) || {}
+  //const filters = queryClient.getQueryData<ListaUfDTO>(['ufs-filters']) || {}
 
+  const filters = {
+    codigoUf: searchParams.get('codigoUf')
+      ? Number(searchParams.get('codigoUf'))
+      : undefined,
+    sigla: searchParams.get('sigla') || undefined,
+    nome: searchParams.get('nome') || undefined,
+    status: (() => {
+      const statusParam = searchParams.get('status')
+      if (statusParam === '1') return 1
+      if (statusParam === '2') return 2
+      return undefined
+    })()
+  }
   const { data: ufs } = useListarUfs(filters, {
     query: { queryKey: ['ufs', filters] },
   })
@@ -79,11 +93,11 @@ export default function Uf() {
           <Table className="">
             <TableHeader>
               <TableRow>
-                <TableHead className="w-30">Código</TableHead>
-                <TableHead>Sigla</TableHead>
-                <TableHead>Nome</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Ações</TableHead>
+                <TableHead className="w-30 text-black font-bold">Código</TableHead>
+                <TableHead className='text-black font-bold'>Sigla</TableHead>
+                <TableHead className='text-black font-bold'>Nome</TableHead>
+                <TableHead className='text-black font-bold'>Status</TableHead>
+                <TableHead className="text-right text-black font-bold">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
