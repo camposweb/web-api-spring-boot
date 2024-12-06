@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 export default async function PageMunicipio() {
   const queryClient = new QueryClient()
 
-  /* await queryClient.prefetchQuery({
-    queryKey: ['ufs'],
-  }) */
+  await queryClient.prefetchQuery({
+    queryKey: ['municipios'],
+  })
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

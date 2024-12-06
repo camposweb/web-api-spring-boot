@@ -1,6 +1,7 @@
 'use client'
 import { ConfirmDeleteMunicipio } from '@/components/municipio/confirm-delete-municipio'
 import { EditMunicipio } from '@/components/municipio/edit-municipio'
+import { GetMunicipioFilter } from '@/components/municipio/get-municipio-filter'
 import { SaveMunicipio } from '@/components/municipio/save-municipio'
 import { PaginationTable } from '@/components/pagination-table'
 import { Badge } from '@/components/ui/badge'
@@ -14,18 +15,38 @@ import {
 } from '@/components/ui/table'
 import { useListarMunicipios } from '@/http/generated/municipio/municipio'
 import { useListarUfs } from '@/http/generated/uf/uf'
-import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function Municipio() {
+  const searchParams = useSearchParams()
+
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize] = useState(10)
 
-  // const queryClient = useQueryClient()
+  const queryClient = useQueryClient()
+
+  const filters = {
+    codigoMunicipio: searchParams.get('codigoMunicipio')
+      ? Number(searchParams.get('codigoMunicipio'))
+      : undefined,
+    codigoUf: searchParams.get('codigoUf')
+      ? Number(searchParams.get('codigoUf'))
+      : undefined,
+    nome: searchParams.get('nome') || undefined,
+    status: (() => {
+      const statusParam = searchParams.get('status')
+      if (statusParam === '1') return 1
+      if (statusParam === '2') return 2
+      return undefined
+    })(),
+  }
 
   const { data: municipios } = useListarMunicipios(
-    {},
+    filters,
     {
-      query: { queryKey: ['municipios'] },
+      query: { queryKey: ['municipios', filters] },
     },
   )
 
@@ -44,6 +65,19 @@ export default function Municipio() {
     currentPage * pageSize,
   )
 
+  const pathname = usePathname() // Monitorando o caminho da URL
+
+  // Limpa o cache quando a página mudar
+  useEffect(() => {
+    queryClient.removeQueries({
+      queryKey: ['municipios-filters'],
+    })
+    queryClient.refetchQueries({
+      queryKey: ['municipios'],
+    })
+  }, [pathname, queryClient])
+
+
   return (
     <div className="mb-10 flex flex-col gap-4 px-4 pb-8">
       <h1 className="text-2xl font-bold text-black">Município</h1>
@@ -51,6 +85,8 @@ export default function Municipio() {
       <SaveMunicipio />
 
       <div className="space-y-3">
+        <GetMunicipioFilter />
+
         <div className="rounded-md border">
           <Table className="">
             <TableHeader className="">
