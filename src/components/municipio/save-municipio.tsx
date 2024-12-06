@@ -158,7 +158,9 @@ export function SaveMunicipio() {
                           <SelectValue placeholder="Selecione uma UF" />
                         </SelectTrigger>
                         <SelectContent sideOffset={5}>
-                          {ufs?.data.map((uf) => (
+                        {ufs?.data
+                          .sort((a: any, b: any) => a.sigla.localeCompare(b.sigla))  // Ordena pela sigla em ordem alfabética
+                          .map((uf) => (
                             <SelectItem
                               key={uf.codigoUf}
                               value={String(uf.codigoUf)}
