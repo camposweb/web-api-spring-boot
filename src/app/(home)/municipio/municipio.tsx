@@ -1,6 +1,6 @@
 'use client'
-
 import { ConfirmDeleteMunicipio } from '@/components/municipio/confirm-delete-municipio'
+import { EditMunicipio } from '@/components/municipio/edit-municipio'
 import { SaveMunicipio } from '@/components/municipio/save-municipio'
 import { PaginationTable } from '@/components/pagination-table'
 import { Badge } from '@/components/ui/badge'
@@ -100,12 +100,12 @@ export default function Municipio() {
                       )}
                     </TableCell>
                     <TableCell className="flex justify-end gap-4 text-left">
-                      {/* <EditUf
+                      <EditMunicipio
+                        codigoMunicipio={municipio.codigoMunicipio}
                         codigoUf={municipio.codigoUf}
-                        siglaUf={municipio.sigla}
-                        nomeUf={municipio.nome}
-                        statusUf={municipio.status}
-                      /> */}
+                        nomeMunicipio={municipio.nome}
+                        statusMunicipio={municipio.status}
+                      />
                       <ConfirmDeleteMunicipio
                         codigo={municipio.codigoMunicipio as number}
                         nome={municipio.nome as string}
