@@ -4,6 +4,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query'
 import { Metadata } from 'next'
+import Bairro from './bairro'
 
 export const metadata: Metadata = {
   title: 'Bairro',
@@ -16,5 +17,11 @@ export default async function PageBairro() {
   await queryClient.prefetchQuery({
     queryKey: ['bairros'],
   })
-  return <HydrationBoundary state={dehydrate(queryClient)}></HydrationBoundary>
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <>
+        <Bairro />
+      </>
+    </HydrationBoundary>
+  )
 }

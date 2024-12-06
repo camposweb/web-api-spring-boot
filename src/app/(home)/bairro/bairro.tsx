@@ -1,8 +1,4 @@
 'use client'
-import { ConfirmDeleteMunicipio } from '@/components/municipio/confirm-delete-municipio'
-import { EditMunicipio } from '@/components/municipio/edit-municipio'
-import { GetMunicipioFilter } from '@/components/municipio/get-municipio-filter'
-import { SaveMunicipio } from '@/components/municipio/save-municipio'
 import { PaginationTable } from '@/components/pagination-table'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -13,13 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useListarBairros } from '@/http/generated/bairro/bairro'
 import { useListarMunicipios } from '@/http/generated/municipio/municipio'
-import { useListarUfs } from '@/http/generated/uf/uf'
 import { useQueryClient } from '@tanstack/react-query'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 
-export default function Municipio() {
+export default function Bairro() {
   const searchParams = useSearchParams()
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -27,34 +23,25 @@ export default function Municipio() {
 
   const queryClient = useQueryClient()
 
-  const filters = {
-    codigoMunicipio: searchParams.get('codigoMunicipio')
-      ? Number(searchParams.get('codigoMunicipio'))
-      : undefined,
-    codigoUf: searchParams.get('codigoUf')
-      ? Number(searchParams.get('codigoUf'))
-      : undefined,
-    nome: searchParams.get('nome') || undefined,
-    status: (() => {
-      const statusParam = searchParams.get('status')
-      if (statusParam === '1') return 1
-      if (statusParam === '2') return 2
-      return undefined
-    })(),
-  }
-
-  const { data: municipios } = useListarMunicipios(filters, {
-    query: { queryKey: ['municipios', filters] },
-  })
-
-  const { data: ufs } = useListarUfs(
+  const { data: bairros } = useListarBairros(
     {},
     {
-      query: { queryKey: ['ufs'] },
+      query: {
+        queryKey: ['bairros'],
+      },
     },
   )
 
-  const items = municipios?.data || []
+  const { data: municipios } = useListarMunicipios(
+    {},
+    {
+      query: {
+        queryKey: ['municipios'],
+      },
+    },
+  )
+
+  const items = bairros?.data || []
   const totalPages = Math.ceil(items.length / pageSize)
 
   const paginateditems = items.slice(
@@ -62,38 +49,23 @@ export default function Municipio() {
     currentPage * pageSize,
   )
 
-  const pathname = usePathname() // Monitorando o caminho da URL
-
-  // Limpa o cache quando a página mudar
-  useEffect(() => {
-    queryClient.removeQueries({
-      queryKey: ['municipios-filters'],
-    })
-    queryClient.refetchQueries({
-      queryKey: ['municipios'],
-    })
-  }, [pathname, queryClient])
-
   return (
     <div className="mb-10 flex flex-col gap-4 px-4 pb-8">
-      <h1 className="text-2xl font-bold text-black">Município</h1>
-
-      <SaveMunicipio />
-
+      <h1 className="text-2xl font-bold text-black">Bairro</h1>
       <div className="space-y-3">
-        <GetMunicipioFilter />
-
         <div className="rounded-md border">
           <Table className="">
             <TableHeader className="">
               <TableRow>
                 <TableHead className="font-bold text-black">
+                  Código Bairro
+                </TableHead>
+                <TableHead className="font-bold text-black">
                   Código Município
                 </TableHead>
                 <TableHead className="font-bold text-black">
-                  Código UF
+                  Município
                 </TableHead>
-                <TableHead className="font-bold text-black">UF</TableHead>
                 <TableHead className="font-bold text-black">Nome</TableHead>
                 <TableHead className="font-bold text-black">Status</TableHead>
                 <TableHead className="text-right font-bold text-black">
@@ -103,22 +75,26 @@ export default function Municipio() {
             </TableHeader>
             <TableBody>
               {paginateditems &&
-                paginateditems.map((municipio) => (
-                  <TableRow key={municipio.codigoMunicipio}>
+                paginateditems.map((bairro) => (
+                  <TableRow key={bairro.codigoBairro}>
                     <TableCell className="items-center justify-center">
-                      {municipio.codigoMunicipio}
+                      {bairro.codigoBairro}
                     </TableCell>
                     <TableCell className="items-center justify-center">
-                      {municipio.codigoUf}
+                      {bairro.codigoMunicipio}
                     </TableCell>
                     <TableCell className="items-center justify-center">
-                      {ufs?.data
-                        .filter((uf) => uf.codigoUf === municipio.codigoUf)
-                        .map((uf) => uf.sigla)}
+                      {municipios?.data
+                        .filter(
+                          (municipio) =>
+                            municipio.codigoMunicipio ===
+                            bairro.codigoMunicipio,
+                        )
+                        .map((municipio) => municipio.nome)}
                     </TableCell>
-                    <TableCell>{municipio.nome}</TableCell>
+                    <TableCell>{bairro.nome}</TableCell>
                     <TableCell>
-                      {municipio.status === 1 ? (
+                      {bairro.status === 1 ? (
                         <Badge className="bg-green-500 hover:bg-green-500">
                           ATIVADO
                         </Badge>
@@ -132,7 +108,7 @@ export default function Municipio() {
                       )}
                     </TableCell>
                     <TableCell className="flex justify-end gap-4 text-left">
-                      <EditMunicipio
+                      {/* <EditMunicipio
                         codigoMunicipio={municipio.codigoMunicipio}
                         codigoUf={municipio.codigoUf}
                         nomeMunicipio={municipio.nome}
@@ -141,19 +117,19 @@ export default function Municipio() {
                       <ConfirmDeleteMunicipio
                         codigo={municipio.codigoMunicipio as number}
                         nome={municipio.nome as string}
-                      />
+                      /> */}
                     </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </div>
-        {municipios && (
+        {bairros && (
           <PaginationTable
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={setCurrentPage}
-            totalItems={municipios.data.length}
+            totalItems={bairros.data.length}
           />
         )}
       </div>
