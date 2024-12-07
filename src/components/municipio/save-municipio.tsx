@@ -158,17 +158,20 @@ export function SaveMunicipio() {
                           <SelectValue placeholder="Selecione uma UF" />
                         </SelectTrigger>
                         <SelectContent sideOffset={5}>
-                        {ufs?.data
-                          .sort((a: any, b: any) => a.sigla.localeCompare(b.sigla))  // Ordena pela sigla em ordem alfabética
-                          .map((uf) => (
-                            <SelectItem
-                              key={uf.codigoUf}
-                              value={String(uf.codigoUf)}
-                              className="hover:cursor-pointer"
-                            >
-                              {uf.sigla}
-                            </SelectItem>
-                          ))}
+                          {ufs?.data
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            .sort((a: any, b: any) =>
+                              a.sigla.localeCompare(b.sigla),
+                            ) // Ordena pela sigla em ordem alfabética
+                            .map((uf) => (
+                              <SelectItem
+                                key={uf.codigoUf}
+                                value={String(uf.codigoUf)}
+                                className="hover:cursor-pointer"
+                              >
+                                {uf.sigla}
+                              </SelectItem>
+                            ))}
                         </SelectContent>
                       </Select>
                     </FormControl>
