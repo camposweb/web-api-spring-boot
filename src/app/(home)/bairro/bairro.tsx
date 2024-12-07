@@ -1,6 +1,7 @@
 'use client'
 import { ConfirmDeleteBairro } from '@/components/bairro/confirm-delete-bairro'
 import { EditBairro } from '@/components/bairro/edit-bairro'
+import { GetBairroFilter } from '@/components/bairro/get-bairro-filter'
 import { SaveBairro } from '@/components/bairro/save-bairro'
 import { PaginationTable } from '@/components/pagination-table'
 import { Badge } from '@/components/ui/badge'
@@ -15,8 +16,8 @@ import {
 import { useListarBairros } from '@/http/generated/bairro/bairro'
 import { useListarMunicipios } from '@/http/generated/municipio/municipio'
 import { useQueryClient } from '@tanstack/react-query'
-import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function Bairro() {
   const searchParams = useSearchParams()
@@ -26,14 +27,27 @@ export default function Bairro() {
 
   const queryClient = useQueryClient()
 
-  const { data: bairros } = useListarBairros(
-    {},
-    {
-      query: {
-        queryKey: ['bairros'],
-      },
+  const filters = {
+    codigoBairro: searchParams.get('codigoBairro')
+      ? Number(searchParams.get('codigoBairro'))
+      : undefined,
+    codigoMunicipio: searchParams.get('codigoMunicipio')
+      ? Number(searchParams.get('codigoMunicipio'))
+      : undefined,
+    nome: searchParams.get('nome') || undefined,
+    status: (() => {
+      const statusParam = searchParams.get('status')
+      if (statusParam === '1') return 1
+      if (statusParam === '2') return 2
+      return undefined
+    })(),
+  }
+
+  const { data: bairros } = useListarBairros(filters, {
+    query: {
+      queryKey: ['bairros', filters],
     },
-  )
+  })
 
   const { data: municipios } = useListarMunicipios(
     {},
@@ -52,11 +66,25 @@ export default function Bairro() {
     currentPage * pageSize,
   )
 
+  const pathname = usePathname() // Monitorando o caminho da URL
+
+  // Limpa o cache quando a página mudar
+  useEffect(() => {
+    queryClient.removeQueries({
+      queryKey: ['bairros-filters'],
+    })
+    queryClient.refetchQueries({
+      queryKey: ['bairros'],
+    })
+  }, [pathname, queryClient])
+
   return (
     <div className="mb-10 flex flex-col gap-4 px-4 pb-8">
       <h1 className="text-2xl font-bold text-black">Bairro</h1>
       <SaveBairro />
       <div className="space-y-3">
+        <GetBairroFilter />
+
         <div className="rounded-md border">
           <Table className="">
             <TableHeader className="">
