@@ -152,11 +152,10 @@ export function GetMunicipioFilter() {
                     value={field.value ?? ''} // Normaliza undefined para string vazia
                     onChange={(e) => {
                       const valor = e.target.value
-                      const numero = Number(valor)
 
-                      // Atualiza somente se for um número ou se o campo estiver vazio
-                      if (valor === '' || !isNaN(numero)) {
-                        field.onChange(valor === '' ? undefined : numero)
+                      // Verifica se o valor contém números
+                      if (!/\d/.test(valor)) {
+                        field.onChange(valor === '' ? undefined : valor)
                       }
                     }}
                     placeholder="codigoUf"
