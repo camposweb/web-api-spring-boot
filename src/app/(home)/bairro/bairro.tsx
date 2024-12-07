@@ -1,4 +1,5 @@
 'use client'
+import { SaveBairro } from '@/components/bairro/save-bairro'
 import { PaginationTable } from '@/components/pagination-table'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -52,6 +53,7 @@ export default function Bairro() {
   return (
     <div className="mb-10 flex flex-col gap-4 px-4 pb-8">
       <h1 className="text-2xl font-bold text-black">Bairro</h1>
+      <SaveBairro />
       <div className="space-y-3">
         <div className="rounded-md border">
           <Table className="">
