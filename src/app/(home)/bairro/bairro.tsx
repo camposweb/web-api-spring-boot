@@ -1,4 +1,5 @@
 'use client'
+import { ConfirmDeleteBairro } from '@/components/bairro/confirm-delete-bairro'
 import { SaveBairro } from '@/components/bairro/save-bairro'
 import { PaginationTable } from '@/components/pagination-table'
 import { Badge } from '@/components/ui/badge'
@@ -115,11 +116,11 @@ export default function Bairro() {
                         codigoUf={municipio.codigoUf}
                         nomeMunicipio={municipio.nome}
                         statusMunicipio={municipio.status}
-                      />
-                      <ConfirmDeleteMunicipio
-                        codigo={municipio.codigoMunicipio as number}
-                        nome={municipio.nome as string}
                       /> */}
+                      <ConfirmDeleteBairro
+                        codigo={bairro.codigoBairro as number}
+                        nome={bairro.nome as string}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
