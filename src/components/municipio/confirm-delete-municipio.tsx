@@ -1,5 +1,5 @@
 import { Trash2 } from 'lucide-react'
-import { confirmDeleteProps } from '../types'
+import { ConfirmDeleteProps } from '../types'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,7 +15,7 @@ import { Button } from '../ui/button'
 import { deletarMunicipio } from '@/http/generated/municipio/municipio'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-export function ConfirmDeleteMunicipio({ codigo, nome }: confirmDeleteProps) {
+export function ConfirmDeleteMunicipio({ codigo, nome }: ConfirmDeleteProps) {
   const queryClient = useQueryClient()
 
   const { mutateAsync: deletarMunicipioFn } = useMutation({

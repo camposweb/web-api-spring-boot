@@ -2,7 +2,7 @@ import { useToast } from '@/hooks/use-toast'
 import { deletarBairro } from '@/http/generated/bairro/bairro'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Trash2 } from 'lucide-react'
-import { confirmDeleteProps } from '../types'
+import { ConfirmDeleteProps } from '../types'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,7 +24,7 @@ interface ErrorProps {
   }
 }
 
-export function ConfirmDeleteBairro({ codigo, nome }: confirmDeleteProps) {
+export function ConfirmDeleteBairro({ codigo, nome }: ConfirmDeleteProps) {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
