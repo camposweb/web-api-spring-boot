@@ -1,6 +1,7 @@
 'use client'
 import { PaginationTable } from '@/components/pagination-table'
 import { ConfirmDeletePessoa } from '@/components/pessoa/confirm-delete-pessoa'
+import { SavePessoa } from '@/components/pessoa/save-pessoa'
 import { Badge } from '@/components/ui/badge'
 import {
   Table,
@@ -43,6 +44,7 @@ export default function Pessoa() {
   return (
     <div className="mb-10 flex flex-col gap-4 px-4 pb-8">
       <h1 className="text-2xl font-bold text-black">Pessoa</h1>
+      <SavePessoa />
       <div className="space-y-3">
         <div className="rounded-md border">
           <Table className="">
