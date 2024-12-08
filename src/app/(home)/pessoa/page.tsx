@@ -4,6 +4,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query'
 import { Metadata } from 'next'
+import Pessoa from './pessoa'
 
 export const metadata: Metadata = {
   title: 'Pessoa',
@@ -17,5 +18,11 @@ export default async function PagePessoa() {
     queryKey: ['pessoas'],
   })
 
-  return <HydrationBoundary state={dehydrate(queryClient)}></HydrationBoundary>
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <>
+        <Pessoa />
+      </>
+    </HydrationBoundary>
+  )
 }
