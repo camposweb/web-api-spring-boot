@@ -96,10 +96,6 @@ export function EditBairro({
 
   async function onSubmit(data: EditBairroSchema) {
     try {
-      /* const municipio = municipios?.data.find(
-        (m) => m.nome?.toLowerCase() === data?.codigoMunicipio?.toLowerCase(),
-      ) */
-
       const municipio = municipios?.data.find((m) => {
         if (
           typeof data.codigoMunicipio === 'string' &&
@@ -117,30 +113,6 @@ export function EditBairro({
         })
         return
       }
-
-      /* if (!municipio) {
-        toast({
-          title: 'Erro',
-          description: `Município com nome ${data.codigoMunicipio} não existe`,
-          variant: 'destructive',
-        })
-        return
-      }
-      const normalizedData = {
-        ...data,
-        // codigoBairro: Number(data.codigoBairro),
-        codigoMunicipio: Number(municipio.codigoMunicipio),
-        // nome: data.nome,
-        // status: data.status,
-      }
-
-      toast({
-        description: (
-          <pre>
-            <code>{JSON.stringify(normalizedData, null, 2)}</code>
-          </pre>
-        ),
-      }) */
 
       const normalizedData = {
         ...data,

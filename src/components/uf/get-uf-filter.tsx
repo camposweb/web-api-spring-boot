@@ -84,15 +84,6 @@ export function GetUfFilter() {
 
   const queryClient = useQueryClient()
 
-  /* const pathname = usePathname() // Monitorando o caminho da URL
-
-  // Limpa o cache quando a página mudar
-  useEffect(() => {
-    queryClient.removeQueries({
-      queryKey: ['ufs-filters'],
-    })
-  }, [pathname, queryClient]) */
-
   async function onSubmit(data: GetUfFilterProps) {
     try {
       if (data.status === 'all') {

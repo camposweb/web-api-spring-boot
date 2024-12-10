@@ -3,6 +3,7 @@ import { ConfirmDeleteBairro } from '@/components/bairro/confirm-delete-bairro'
 import { EditBairro } from '@/components/bairro/edit-bairro'
 import { GetBairroFilter } from '@/components/bairro/get-bairro-filter'
 import { SaveBairro } from '@/components/bairro/save-bairro'
+import { LoadingTable } from '@/components/loading-table'
 import { PaginationTable } from '@/components/pagination-table'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -43,7 +44,7 @@ export default function Bairro() {
     })(),
   }
 
-  const { data: bairros } = useListarBairros(filters, {
+  const { data: bairros, isLoading } = useListarBairros(filters, {
     query: {
       queryKey: ['bairros', filters],
     },
@@ -85,84 +86,90 @@ export default function Bairro() {
       <div className="space-y-3">
         <GetBairroFilter />
 
-        <div className="rounded-md border">
-          <Table className="">
-            <TableHeader className="">
-              <TableRow>
-                <TableHead className="font-bold text-black">
-                  Código Bairro
-                </TableHead>
-                <TableHead className="font-bold text-black">
-                  Código Município
-                </TableHead>
-                <TableHead className="font-bold text-black">
-                  Município
-                </TableHead>
-                <TableHead className="font-bold text-black">Nome</TableHead>
-                <TableHead className="font-bold text-black">Status</TableHead>
-                <TableHead className="text-right font-bold text-black">
-                  Ações
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginateditems &&
-                paginateditems.map((bairro) => (
-                  <TableRow key={bairro.codigoBairro}>
-                    <TableCell className="items-center justify-center">
-                      {bairro.codigoBairro}
-                    </TableCell>
-                    <TableCell className="items-center justify-center">
-                      {bairro.codigoMunicipio}
-                    </TableCell>
-                    <TableCell className="items-center justify-center">
-                      {municipios?.data
-                        .filter(
-                          (municipio) =>
-                            municipio.codigoMunicipio ===
-                            bairro.codigoMunicipio,
-                        )
-                        .map((municipio) => municipio.nome)}
-                    </TableCell>
-                    <TableCell>{bairro.nome}</TableCell>
-                    <TableCell>
-                      {bairro.status === 1 ? (
-                        <Badge className="bg-green-500 hover:bg-green-500">
-                          ATIVADO
-                        </Badge>
-                      ) : (
-                        <Badge
-                          variant="destructive"
-                          className="hover:bg-red-600"
-                        >
-                          DESATIVADO
-                        </Badge>
-                      )}
-                    </TableCell>
-                    <TableCell className="flex justify-end gap-4 text-left">
-                      <EditBairro
-                        codigoBairro={bairro.codigoBairro as number}
-                        codigoMunicipio={bairro.codigoMunicipio as number}
-                        nome={bairro.nome as string}
-                        status={bairro.status as number}
-                      />
-                      <ConfirmDeleteBairro
-                        codigo={bairro.codigoBairro as number}
-                        nome={bairro.nome as string}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </div>
-        {bairros && (
+        {isLoading === true ? (
+          <LoadingTable />
+        ) : (
+          <div className="rounded-md border">
+            <Table className="">
+              <TableHeader className="">
+                <TableRow>
+                  <TableHead className="font-bold text-black">
+                    Código Bairro
+                  </TableHead>
+                  <TableHead className="font-bold text-black">
+                    Código Município
+                  </TableHead>
+                  <TableHead className="font-bold text-black">
+                    Município
+                  </TableHead>
+                  <TableHead className="font-bold text-black">Nome</TableHead>
+                  <TableHead className="font-bold text-black">Status</TableHead>
+                  <TableHead className="text-right font-bold text-black">
+                    Ações
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginateditems &&
+                  paginateditems.map((bairro) => (
+                    <TableRow key={bairro.codigoBairro}>
+                      <TableCell className="items-center justify-center">
+                        {bairro.codigoBairro}
+                      </TableCell>
+                      <TableCell className="items-center justify-center">
+                        {bairro.codigoMunicipio}
+                      </TableCell>
+                      <TableCell className="items-center justify-center">
+                        {municipios?.data
+                          .filter(
+                            (municipio) =>
+                              municipio.codigoMunicipio ===
+                              bairro.codigoMunicipio,
+                          )
+                          .map((municipio) => municipio.nome)}
+                      </TableCell>
+                      <TableCell>{bairro.nome}</TableCell>
+                      <TableCell>
+                        {bairro.status === 1 ? (
+                          <Badge className="bg-green-500 hover:bg-green-500">
+                            ATIVADO
+                          </Badge>
+                        ) : (
+                          <Badge
+                            variant="destructive"
+                            className="hover:bg-red-600"
+                          >
+                            DESATIVADO
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell className="flex justify-end gap-4 text-left">
+                        <EditBairro
+                          codigoBairro={bairro.codigoBairro as number}
+                          codigoMunicipio={bairro.codigoMunicipio as number}
+                          nome={bairro.nome as string}
+                          status={bairro.status as number}
+                        />
+                        <ConfirmDeleteBairro
+                          codigo={bairro.codigoBairro as number}
+                          nome={bairro.nome as string}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+        {bairros && bairros.data.length > 0 ? (
           <PaginationTable
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={setCurrentPage}
             totalItems={bairros.data.length}
           />
+        ) : (
+          ''
         )}
       </div>
     </div>

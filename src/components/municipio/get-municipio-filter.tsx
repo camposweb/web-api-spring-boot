@@ -74,10 +74,6 @@ export function GetMunicipioFilter() {
 
       const normalizeData = {
         ...data,
-        /* codigoMunicipio: data.codigoMunicipio ?? undefined,
-			  codigoUf: data.codigoUf ?? undefined,
-			  nome: data.nome ?? undefined,
-			  status: data.status ?? undefined, */
       }
 
       await queryClient.setQueryData(['municipios-filters'], normalizeData)

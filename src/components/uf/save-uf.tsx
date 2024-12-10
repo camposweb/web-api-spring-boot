@@ -81,14 +81,7 @@ export function SaveUf() {
       })
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async onError() {
-      /* if (Array.isArray(e.response?.data)) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        console.log(e.response?.data.map((e: any) => e.mensagem).join('\n'))
-      } else {
-        console.log(e.response?.data.mensagem)
-      } */
-    },
+    async onError() {},
   })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

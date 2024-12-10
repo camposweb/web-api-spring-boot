@@ -1,4 +1,5 @@
 'use client'
+import { LoadingTable } from '@/components/loading-table'
 import { ConfirmDeleteMunicipio } from '@/components/municipio/confirm-delete-municipio'
 import { EditMunicipio } from '@/components/municipio/edit-municipio'
 import { GetMunicipioFilter } from '@/components/municipio/get-municipio-filter'
@@ -43,7 +44,7 @@ export default function Municipio() {
     })(),
   }
 
-  const { data: municipios } = useListarMunicipios(filters, {
+  const { data: municipios, isLoading } = useListarMunicipios(filters, {
     query: { queryKey: ['municipios', filters] },
   })
 
@@ -83,78 +84,84 @@ export default function Municipio() {
       <div className="space-y-3">
         <GetMunicipioFilter />
 
-        <div className="rounded-md border">
-          <Table className="">
-            <TableHeader className="">
-              <TableRow>
-                <TableHead className="font-bold text-black">
-                  Código Município
-                </TableHead>
-                <TableHead className="font-bold text-black">
-                  Código UF
-                </TableHead>
-                <TableHead className="font-bold text-black">UF</TableHead>
-                <TableHead className="font-bold text-black">Nome</TableHead>
-                <TableHead className="font-bold text-black">Status</TableHead>
-                <TableHead className="text-right font-bold text-black">
-                  Ações
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginateditems &&
-                paginateditems.map((municipio) => (
-                  <TableRow key={municipio.codigoMunicipio}>
-                    <TableCell className="items-center justify-center">
-                      {municipio.codigoMunicipio}
-                    </TableCell>
-                    <TableCell className="items-center justify-center">
-                      {municipio.codigoUf}
-                    </TableCell>
-                    <TableCell className="items-center justify-center">
-                      {ufs?.data
-                        .filter((uf) => uf.codigoUf === municipio.codigoUf)
-                        .map((uf) => uf.sigla)}
-                    </TableCell>
-                    <TableCell>{municipio.nome}</TableCell>
-                    <TableCell>
-                      {municipio.status === 1 ? (
-                        <Badge className="bg-green-500 hover:bg-green-500">
-                          ATIVADO
-                        </Badge>
-                      ) : (
-                        <Badge
-                          variant="destructive"
-                          className="hover:bg-red-600"
-                        >
-                          DESATIVADO
-                        </Badge>
-                      )}
-                    </TableCell>
-                    <TableCell className="flex justify-end gap-4 text-left">
-                      <EditMunicipio
-                        codigoMunicipio={municipio.codigoMunicipio}
-                        codigoUf={municipio.codigoUf}
-                        nomeMunicipio={municipio.nome}
-                        statusMunicipio={municipio.status}
-                      />
-                      <ConfirmDeleteMunicipio
-                        codigo={municipio.codigoMunicipio as number}
-                        nome={municipio.nome as string}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </div>
-        {municipios && (
+        {isLoading === true ? (
+          <LoadingTable />
+        ) : (
+          <div className="rounded-md border">
+            <Table className="">
+              <TableHeader className="">
+                <TableRow>
+                  <TableHead className="font-bold text-black">
+                    Código Município
+                  </TableHead>
+                  <TableHead className="font-bold text-black">
+                    Código UF
+                  </TableHead>
+                  <TableHead className="font-bold text-black">UF</TableHead>
+                  <TableHead className="font-bold text-black">Nome</TableHead>
+                  <TableHead className="font-bold text-black">Status</TableHead>
+                  <TableHead className="text-right font-bold text-black">
+                    Ações
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginateditems &&
+                  paginateditems.map((municipio) => (
+                    <TableRow key={municipio.codigoMunicipio}>
+                      <TableCell className="items-center justify-center">
+                        {municipio.codigoMunicipio}
+                      </TableCell>
+                      <TableCell className="items-center justify-center">
+                        {municipio.codigoUf}
+                      </TableCell>
+                      <TableCell className="items-center justify-center">
+                        {ufs?.data
+                          .filter((uf) => uf.codigoUf === municipio.codigoUf)
+                          .map((uf) => uf.sigla)}
+                      </TableCell>
+                      <TableCell>{municipio.nome}</TableCell>
+                      <TableCell>
+                        {municipio.status === 1 ? (
+                          <Badge className="bg-green-500 hover:bg-green-500">
+                            ATIVADO
+                          </Badge>
+                        ) : (
+                          <Badge
+                            variant="destructive"
+                            className="hover:bg-red-600"
+                          >
+                            DESATIVADO
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell className="flex justify-end gap-4 text-left">
+                        <EditMunicipio
+                          codigoMunicipio={municipio.codigoMunicipio}
+                          codigoUf={municipio.codigoUf}
+                          nomeMunicipio={municipio.nome}
+                          statusMunicipio={municipio.status}
+                        />
+                        <ConfirmDeleteMunicipio
+                          codigo={municipio.codigoMunicipio as number}
+                          nome={municipio.nome as string}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+        {municipios && municipios.data.length > 0 ? (
           <PaginationTable
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={setCurrentPage}
             totalItems={municipios.data.length}
           />
+        ) : (
+          ''
         )}
       </div>
     </div>
