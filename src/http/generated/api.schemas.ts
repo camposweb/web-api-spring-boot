@@ -57,12 +57,15 @@ export interface BairroDTO {
 
 export interface MunicipioDTO {
   codigoUf: number
+  /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
   status: number
 }
 
 export interface UfDTO {
+  /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
+  /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   sigla: string
   status: number
 }
@@ -92,6 +95,7 @@ export interface ListaMunicipioDTO {
 export interface AtualizacaoMunicipioDTO {
   codigoMunicipio: number
   codigoUf: number
+  /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
   status: number
 }
@@ -136,7 +140,7 @@ export interface AtualizacaoEnderecoDTO {
   codigoBairro: number
   codigoEndereco?: number
   codigoPessoa: number
-  complemento: string
+  complemento?: string | undefined
   nomeRua: string
   numero: string
 }
@@ -148,7 +152,7 @@ export interface AtualizacaoPessoaDTO {
    * @minimum 1
    * @maximum 150
    */
-  idade: number
+  idade: number | string
   login: string
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
@@ -158,16 +162,40 @@ export interface AtualizacaoPessoaDTO {
   status: number
 }
 
+export interface AtualizacaoUfDTO {
+  codigoUf: number
+  /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
+  nome: string
+  /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
+  sigla: string
+  status: number
+}
 export interface ListaUfDTO {
   codigoUf?: number
   nome?: string
   sigla?: string
   status?: number
 }
+export interface DetalhamentoEnderecoDTO {
+  bairro?: ListaBairroDTO
+  cep?: string
+  codigoBairro?: number
+  codigoEndereco?: number
+  codigoPessoa?: number
+  complemento?: string
+  municipio?: ListaMunicipioDTO
+  nomeRua?: string
+  numero?: string
+  uf?: ListaUfDTO
+}
 
-export interface AtualizacaoUfDTO {
-  codigoUf: number
-  nome: string
-  sigla: string
-  status: number
+export interface DetalhamentoPessoaDTO {
+  codigoPessoa?: number
+  enderecos?: DetalhamentoEnderecoDTO[]
+  idade?: number
+  login?: string
+  nome?: string
+  senha?: string
+  sobrenome?: string
+  status?: number
 }

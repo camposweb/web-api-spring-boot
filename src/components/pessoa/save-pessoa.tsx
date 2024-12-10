@@ -30,7 +30,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import { ScrollArea } from '../ui/scroll-area'
 import { useListarMunicipios } from '@/http/generated/municipio/municipio'
 import { useListarBairros } from '@/http/generated/bairro/bairro'
-import { HousePlus, Trash2 } from 'lucide-react'
+import { HousePlus, Trash2, UserPlus } from 'lucide-react'
 
 const savePessoaSchema = z.object({
   nome: z
@@ -45,7 +45,16 @@ const savePessoaSchema = z.object({
     .regex(/^[a-zA-Zá-úÁ-ÚçÇ\s]+$/, {
       message: 'Campo obrigatório e deve conter apenas letras',
     }),
-  idade: z.union([z.string(), z.number()]),
+  idade: z.union(
+    [
+      z.string().min(1, { message: 'Campo obrigatório' }),
+      z
+        .number()
+        .min(1, { message: 'Campo obrigatório' })
+        .nonnegative({ message: 'Idade deve ser maior que zero' }),
+    ],
+    { message: 'Campo obrigatório' },
+  ),
 
   login: z.string().min(1, 'Campo obrigatório'),
   senha: z.string().min(1, 'Campo obrigatório'),
@@ -57,12 +66,12 @@ const savePessoaSchema = z.object({
   }),
   enderecos: z.array(
     z.object({
-      codigoMunicipio: z.string(),
-      codigoBairro: z.string(),
-      nomeRua: z.string(),
-      numero: z.string(),
+      codigoMunicipio: z.string().min(1, 'Campo obrigatório'),
+      codigoBairro: z.string().min(1, 'Campo obrigatório'),
+      nomeRua: z.string().min(1, 'Campo obrigatório'),
+      numero: z.string().min(1, 'Campo obrigatório'),
       complemento: z.string(),
-      cep: z.string(),
+      cep: z.string().min(1, 'Campo obrigatório'),
     }),
   ),
 })
@@ -227,7 +236,9 @@ export function SavePessoa() {
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button className="text-xl">Cadastrar Pessoa</Button>
+          <Button className="text-xl">
+            <UserPlus /> Cadastrar Pessoa
+          </Button>
         </DialogTrigger>
         <DialogContent className="">
           <DialogHeader>

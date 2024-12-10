@@ -24,6 +24,7 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type {
   AtualizacaoPessoaDTO,
   DeletarPessoaDTO,
+  DetalhamentoPessoaDTO,
   ListaPessoaDTO,
   ListarPessoasParams,
   PessoaDTO,
@@ -32,7 +33,7 @@ import type {
 export const listarPessoas = (
   params?: ListarPessoasParams,
   options?: AxiosRequestConfig,
-): Promise<AxiosResponse<ListaPessoaDTO[]>> => {
+): Promise<AxiosResponse<DetalhamentoPessoaDTO[]>> => {
   return axios.get(`http://146.235.29.16:8080/pessoa`, {
     ...options,
     params: { ...params, ...options?.params },
