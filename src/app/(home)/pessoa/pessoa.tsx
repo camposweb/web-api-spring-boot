@@ -1,4 +1,5 @@
 'use client'
+import { EmptyData } from '@/components/empty-data'
 import { PaginationTable } from '@/components/pagination-table'
 import { ConfirmDeletePessoa } from '@/components/pessoa/confirm-delete-pessoa'
 import { EditPessoa } from '@/components/pessoa/edit-pessoa'
@@ -17,6 +18,7 @@ import { useListarPessoas } from '@/http/generated/pessoa/pessoa'
 import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import Loading from '../uf/loading'
 
 export default function Pessoa() {
   const searchParams = useSearchParams()
@@ -39,7 +41,7 @@ export default function Pessoa() {
     })(),
   }
 
-  const { data: pessoas } = useListarPessoas(filters, {
+  const { data: pessoas, isLoading } = useListarPessoas(filters, {
     query: {
       queryKey: ['pessoas', filters],
     },
@@ -65,45 +67,40 @@ export default function Pessoa() {
     })
   }, [pathname, queryClient])
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <div className="mb-10 flex flex-col gap-4 px-4 pb-8">
       <h1 className="text-2xl font-bold text-black">Pessoa</h1>
       <SavePessoa />
       <div className="space-y-3">
-        <GetPessoaFilter />
+        {pessoas && pessoas.data.length > 0 ? <GetPessoaFilter /> : ''}
         <div className="rounded-md border">
-          <Table className="">
-            <TableHeader className="">
-              <TableRow>
-                <TableHead className="font-bold text-black">
-                  Código Pessoa
-                </TableHead>
-                <TableHead className="font-bold text-black">Nome</TableHead>
-                <TableHead className="font-bold text-black">
-                  Sobrenome
-                </TableHead>
-                <TableHead className="font-bold text-black">Idade</TableHead>
-                <TableHead className="font-bold text-black">Login</TableHead>
-                <TableHead className="font-bold text-black">Senha</TableHead>
-                <TableHead className="font-bold text-black">Status</TableHead>
-                <TableHead className="text-right font-bold text-black">
-                  Ações
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginateditems &&
-                paginateditems.map((pessoa) => {
-                  // eslint-disable-next-line react-hooks/rules-of-hooks
-                  /* const { data: enderecos } = useListarPessoas(
-                    {
-                     co
-                    },
-                    { query: { queryKey: ['pessoas', pessoa.codigoPessoa] } },
-                  )
-                  const endereco = enderecos?.data.map((e) => e.enderecos) */
-
-                  return (
+          {pessoas && pessoas.data.length > 0 ? (
+            <Table className="">
+              <TableHeader className="">
+                <TableRow>
+                  <TableHead className="font-bold text-black">
+                    Código Pessoa
+                  </TableHead>
+                  <TableHead className="font-bold text-black">Nome</TableHead>
+                  <TableHead className="font-bold text-black">
+                    Sobrenome
+                  </TableHead>
+                  <TableHead className="font-bold text-black">Idade</TableHead>
+                  <TableHead className="font-bold text-black">Login</TableHead>
+                  <TableHead className="font-bold text-black">Senha</TableHead>
+                  <TableHead className="font-bold text-black">Status</TableHead>
+                  <TableHead className="text-right font-bold text-black">
+                    Ações
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginateditems &&
+                  paginateditems.map((pessoa) => (
                     <TableRow key={pessoa.codigoPessoa}>
                       <TableCell className="items-center justify-center">
                         {pessoa.codigoPessoa}
@@ -139,7 +136,7 @@ export default function Pessoa() {
                           senha={pessoa.senha as string}
                           status={pessoa.status as number}
                           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                          // enderecos={pessoa.enderecos as []}
+                          enderecos={pessoa.enderecos as any}
                         />
                         <ConfirmDeletePessoa
                           codigo={pessoa.codigoPessoa as number}
@@ -147,18 +144,22 @@ export default function Pessoa() {
                         />
                       </TableCell>
                     </TableRow>
-                  )
-                })}
-            </TableBody>
-          </Table>
+                  ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <EmptyData />
+          )}
         </div>
-        {pessoas && (
+        {pessoas && pessoas.data.length > 0 ? (
           <PaginationTable
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={setCurrentPage}
             totalItems={pessoas.data.length}
           />
+        ) : (
+          ''
         )}
       </div>
     </div>
