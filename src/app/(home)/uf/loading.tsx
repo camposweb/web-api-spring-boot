@@ -2,22 +2,18 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Loading() {
   return (
-    <div className="flex flex-col space-y-2">
-      <div className="animate-pulse">
+    <div className="flex animate-pulse flex-col space-y-2 p-4">
+      <div className="">
         <Skeleton className="h-8 w-32" />
       </div>
       <div>
-        <Skeleton className="h-8 w-32" />
+        <Skeleton className="h-8 w-48" />
       </div>
       <div>
-        <Skeleton className="h-8 w-full" />
+        <Skeleton className="h-14 w-full" />
       </div>
-      <div className="flex w-full flex-row space-x-9">
-        <Skeleton className="h-8 w-7" />
-
-        <Skeleton className="h-8 w-12" />
-
-        <Skeleton className="h-8 w-40" />
+      <div className="">
+        <Skeleton className="h-80 w-full" />
       </div>
     </div>
   )
