@@ -130,8 +130,8 @@ export function EditMunicipio({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Editar UF {nomeMunicipio}</DialogTitle>
-          <DialogDescription>Painel de edição de UF</DialogDescription>
+          <DialogTitle>Editar Município {nomeMunicipio}</DialogTitle>
+          <DialogDescription>Painel para editar de Município</DialogDescription>
           <Form {...formEditMunicipio}>
             <form
               onSubmit={formEditMunicipio.handleSubmit(onSubmit)}

@@ -34,6 +34,7 @@ import {
   SelectValue,
 } from '../ui/select'
 import { Switch } from '../ui/switch'
+import { Plus } from 'lucide-react'
 
 const saveMunicipioSchema = z.object({
   codigoUf: z.union([
@@ -129,7 +130,9 @@ export function SaveMunicipio() {
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button className="text-xl">Cadastrar Município</Button>
+          <Button className="text-xl">
+            <Plus /> Cadastrar Município
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

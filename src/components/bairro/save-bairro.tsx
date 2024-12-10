@@ -26,6 +26,7 @@ import {
 } from '../ui/form'
 import { Input } from '../ui/input'
 import { Switch } from '../ui/switch'
+import { Plus } from 'lucide-react'
 
 const saveBairroSchema = z.object({
   nomeMunicipio: z
@@ -149,7 +150,9 @@ export function SaveBairro() {
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button className="text-xl">Cadastrar Bairro</Button>
+          <Button className="text-xl">
+            <Plus /> Cadastrar Bairro
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

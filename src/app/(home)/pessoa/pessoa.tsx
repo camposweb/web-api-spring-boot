@@ -76,7 +76,7 @@ export default function Pessoa() {
       <h1 className="text-2xl font-bold text-black">Pessoa</h1>
       <SavePessoa />
       <div className="space-y-3">
-        {pessoas && pessoas.data.length > 0 ? <GetPessoaFilter /> : ''}
+        <GetPessoaFilter />
         <div className="rounded-md border">
           {pessoas && pessoas.data.length > 0 ? (
             <Table className="">

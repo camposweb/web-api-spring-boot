@@ -1,4 +1,5 @@
 'use client'
+import { EmptyData } from '@/components/empty-data'
 import { LoadingTable } from '@/components/loading-table'
 import { PaginationTable } from '@/components/pagination-table'
 import { ConfirmDeleteUf } from '@/components/uf/confirm-delete-uf'
@@ -75,61 +76,73 @@ export default function Uf() {
         {isLoading === true ? (
           <LoadingTable />
         ) : (
-          <div className="rounded-md border">
-            <Table className="">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-30 font-bold text-black">
-                    Código
-                  </TableHead>
-                  <TableHead className="font-bold text-black">Sigla</TableHead>
-                  <TableHead className="font-bold text-black">Nome</TableHead>
-                  <TableHead className="font-bold text-black">Status</TableHead>
-                  <TableHead className="text-right font-bold text-black">
-                    Ações
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paginateditems &&
-                  paginateditems.map((uf) => (
-                    <TableRow key={uf.codigoUf}>
-                      <TableCell className="items-center justify-center">
-                        {uf.codigoUf}
-                      </TableCell>
-                      <TableCell>{uf.sigla}</TableCell>
-                      <TableCell>{uf.nome}</TableCell>
-                      <TableCell>
-                        {uf.status === 1 ? (
-                          <Badge className="bg-green-500 hover:bg-green-500">
-                            ATIVADO
-                          </Badge>
-                        ) : (
-                          <Badge
-                            variant="destructive"
-                            className="hover:bg-red-600"
-                          >
-                            DESATIVADO
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell className="flex justify-end gap-4 text-left">
-                        <EditUf
-                          codigoUf={uf.codigoUf}
-                          siglaUf={uf.sigla}
-                          nomeUf={uf.nome}
-                          statusUf={uf.status}
-                        />
-                        <ConfirmDeleteUf
-                          codigo={uf.codigoUf as number}
-                          nome={uf.nome as string}
-                        />
-                      </TableCell>
+          <>
+            {ufs && ufs.data.length > 0 ? (
+              <div className="rounded-md border">
+                <Table className="">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-30 font-bold text-black">
+                        Código
+                      </TableHead>
+                      <TableHead className="font-bold text-black">
+                        Sigla
+                      </TableHead>
+                      <TableHead className="font-bold text-black">
+                        Nome
+                      </TableHead>
+                      <TableHead className="font-bold text-black">
+                        Status
+                      </TableHead>
+                      <TableHead className="text-right font-bold text-black">
+                        Ações
+                      </TableHead>
                     </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </div>
+                  </TableHeader>
+                  <TableBody>
+                    {paginateditems &&
+                      paginateditems.map((uf) => (
+                        <TableRow key={uf.codigoUf}>
+                          <TableCell className="items-center justify-center">
+                            {uf.codigoUf}
+                          </TableCell>
+                          <TableCell>{uf.sigla}</TableCell>
+                          <TableCell>{uf.nome}</TableCell>
+                          <TableCell>
+                            {uf.status === 1 ? (
+                              <Badge className="bg-green-500 hover:bg-green-500">
+                                ATIVADO
+                              </Badge>
+                            ) : (
+                              <Badge
+                                variant="destructive"
+                                className="hover:bg-red-600"
+                              >
+                                DESATIVADO
+                              </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell className="flex justify-end gap-4 text-left">
+                            <EditUf
+                              codigoUf={uf.codigoUf}
+                              siglaUf={uf.sigla}
+                              nomeUf={uf.nome}
+                              statusUf={uf.status}
+                            />
+                            <ConfirmDeleteUf
+                              codigo={uf.codigoUf as number}
+                              nome={uf.nome as string}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </div>
+            ) : (
+              <EmptyData />
+            )}
+          </>
         )}
         {ufs && ufs.data.length > 0 ? (
           <PaginationTable

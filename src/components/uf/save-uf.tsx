@@ -25,6 +25,7 @@ import {
 } from '../ui/form'
 import { Input } from '../ui/input'
 import { Switch } from '../ui/switch'
+import { Plus } from 'lucide-react'
 
 const saveUfSchema = z.object({
   sigla: z
@@ -126,7 +127,10 @@ export function SaveUf() {
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button className="text-xl">Cadastrar UF</Button>
+          <Button className="text-xl">
+            <Plus />
+            Cadastrar UF
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
