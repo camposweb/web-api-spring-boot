@@ -163,11 +163,15 @@ export function GetUfFilter() {
                   <Input
                     {...field}
                     value={field.value ?? ''} // Normaliza undefined para string vazia
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value === '' ? undefined : e.target.value,
-                      )
-                    }
+                    onChange={(e) => {
+                      const valor = e.target.value
+                      const numero = Number(valor)
+
+                      // Atualiza somente se for um número ou se o campo estiver vazio
+                      if (valor === '' || !isNaN(numero)) {
+                        field.onChange(valor === '' ? undefined : numero)
+                      }
+                    }}
                     placeholder="codigoUf"
                   />
                 </FormControl>
@@ -184,11 +188,16 @@ export function GetUfFilter() {
                   <Input
                     {...field}
                     value={field.value ?? ''} // Normaliza undefined para string vazia
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value === '' ? undefined : e.target.value,
-                      )
-                    }
+                    onChange={(e) => {
+                      const input = e.target.value
+                      const ultimaEntrada = input.slice(-1) // Verifica o último caractere inserido
+                      if (/[^a-zA-ZÀ-ÿ\s]/.test(ultimaEntrada)) {
+                        // Se não for letra ou espaço, não atualiza o estado
+                        e.preventDefault()
+                        return
+                      }
+                      field.onChange(input === '' ? undefined : input) // Atualiza o estado se o caractere for válido
+                    }}
                     placeholder="sigla"
                   />
                 </FormControl>

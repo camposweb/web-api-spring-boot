@@ -61,7 +61,7 @@ export function ConfirmDeleteUf({ codigo, nome }: ConfirmDeleteProps) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
               deletarUfFn({ codigoUf: codigo })

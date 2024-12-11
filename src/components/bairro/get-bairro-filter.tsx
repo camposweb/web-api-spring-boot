@@ -154,19 +154,7 @@ export function GetBairroFilter() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value ?? ''} // Normaliza undefined para string vazia
-                    onChange={(e) => {
-                      const valor = e.target.value
-
-                      // Verifica se o valor contém números
-                      if (!/\d/.test(valor)) {
-                        field.onChange(valor === '' ? undefined : valor)
-                      }
-                    }}
-                    placeholder="nome"
-                  />
+                  <Input {...field} placeholder="nome" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

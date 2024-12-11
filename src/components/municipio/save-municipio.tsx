@@ -221,7 +221,7 @@ export function SaveMunicipio() {
                 )}
               />
               <Button type="submit" className="mt-4 w-full text-sm font-bold">
-                Salvar alterações
+                Cadastrar Municipio
               </Button>
             </form>
           </Form>

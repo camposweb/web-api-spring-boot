@@ -62,7 +62,7 @@ export function ConfirmDeletePessoa({ codigo, nome }: ConfirmDeleteProps) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
               deletarPessoaFn({ codigoPessoa: codigo })

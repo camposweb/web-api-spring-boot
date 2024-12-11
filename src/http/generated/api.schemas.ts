@@ -177,15 +177,15 @@ export interface ListaUfDTO {
   status?: number
 }
 export interface DetalhamentoEnderecoDTO {
-  bairro?: ListaBairroDTO
-  cep?: string
-  codigoBairro?: number
   codigoEndereco?: number
   codigoPessoa?: number
-  complemento?: string
-  municipio?: ListaMunicipioDTO
+  codigoBairro?: number
   nomeRua?: string
   numero?: string
+  complemento?: string
+  cep?: string
+  bairro?: ListaBairroDTO
+  municipio?: ListaMunicipioDTO
   uf?: ListaUfDTO
 }
 

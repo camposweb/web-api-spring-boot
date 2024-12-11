@@ -120,13 +120,6 @@ export function EditBairro({
       }
 
       await atualizarBairroFn(normalizedData)
-      /* toast({
-        description: (
-          <pre>
-            <code>{JSON.stringify(normalizedData, null, 2)}</code>
-          </pre>
-        ),
-      }) */
 
       toast({
         description: (
@@ -174,9 +167,9 @@ export function EditBairro({
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Cadastrar Bairro</DialogTitle>
+            <DialogTitle>Editar Bairro</DialogTitle>
             <DialogDescription>
-              Formulário para cadastro de Bairro
+              Formulário para edição de Bairro
             </DialogDescription>
           </DialogHeader>
           <Form {...formEditBairro}>

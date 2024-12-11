@@ -222,7 +222,7 @@ export function SaveBairro() {
                 )}
               />
               <Button type="submit" className="mt-4 w-full text-sm font-bold">
-                Salvar alterações
+                Cadastrar Bairro
               </Button>
             </form>
           </Form>

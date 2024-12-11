@@ -19,6 +19,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Loading from '../uf/loading'
+import { DetailPessoa } from '@/components/pessoa/detail-pessoa'
 
 export default function Pessoa() {
   const searchParams = useSearchParams()
@@ -93,6 +94,9 @@ export default function Pessoa() {
                   <TableHead className="font-bold text-black">Login</TableHead>
                   <TableHead className="font-bold text-black">Senha</TableHead>
                   <TableHead className="font-bold text-black">Status</TableHead>
+                  <TableHead className="font-bold text-black">
+                    Detalhamento Pessoa
+                  </TableHead>
                   <TableHead className="text-right font-bold text-black">
                     Ações
                   </TableHead>
@@ -125,6 +129,20 @@ export default function Pessoa() {
                             DESATIVADO
                           </Badge>
                         )}
+                      </TableCell>
+                      <TableCell>
+                        <DetailPessoa
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          codigoPessoa={pessoa.codigoPessoa as number}
+                          nome={pessoa.nome as string}
+                          sobrenome={pessoa.sobrenome as string}
+                          idade={pessoa.idade as number}
+                          login={pessoa.login as string}
+                          senha={pessoa.senha as string}
+                          status={pessoa.status as number}
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          enderecos={pessoa.enderecos as any}
+                        />
                       </TableCell>
                       <TableCell className="flex justify-end gap-4 text-left">
                         <EditPessoa

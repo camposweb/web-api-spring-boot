@@ -164,7 +164,10 @@ export function EditPessoa({
 
   async function onSubmit(data: EditPessoaSchema) {
     try {
-      if (data.enderecos.atualizarEndereco.length < 1) {
+      if (
+        data.enderecos.atualizarEndereco.length < 1 &&
+        data.enderecos.novoEndereco.length < 1
+      ) {
         toast({
           variant: 'destructive',
           title: 'Erro',

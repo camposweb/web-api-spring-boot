@@ -69,7 +69,7 @@ export function ConfirmDeleteBairro({ codigo, nome }: ConfirmDeleteProps) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
               deletarBairroFn({ codigoBairro: codigo })
