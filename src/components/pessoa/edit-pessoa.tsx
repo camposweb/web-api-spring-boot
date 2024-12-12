@@ -37,9 +37,14 @@ const enderecoSchema = z.object({
   codigoBairro: z.string().min(1, 'Campo obrigatório'),
   nomeRua: z.string().min(1, 'Campo obrigatório'),
   numero: z.string().min(1, 'Campo obrigatório'),
-  complemento: z
-    .string()
-    .max(20, { message: 'Deve conter no máximo 20 caracteres' }),
+  complemento: z.union([
+    z
+      .string()
+      .max(20, { message: 'Deve conter no máximo 20 caracteres' })
+      .nullable()
+      .optional(),
+    z.null(),
+  ]),
   cep: z.string().min(1, 'Campo obrigatório'),
 })
 
@@ -53,7 +58,10 @@ const atualizarEndereco = z.object({
   numero: z.string().min(1, 'Campo obrigatório'),
   complemento: z
     .string()
-    .max(20, { message: 'Deve conter no máximo 20 caracteres' }),
+    .max(20, { message: 'Deve conter no máximo 20 caracteres' })
+    .nullable()
+    .optional(),
+
   cep: z.string().min(1, 'Campo obrigatório'),
 })
 
@@ -518,6 +526,7 @@ export function EditPessoa({
                                 <FormControl>
                                   <Input
                                     {...field}
+                                    value={field.value ?? ''}
                                     placeholder="Digite o complemento(Opcional)"
                                   />
                                 </FormControl>
@@ -636,6 +645,7 @@ export function EditPessoa({
                                 <FormControl>
                                   <Input
                                     {...field}
+                                    value={field.value ?? ''}
                                     placeholder="Digite o complemento(Opcional)"
                                   />
                                 </FormControl>

@@ -5,7 +5,6 @@
  * API para o Bootcamp Java - Spring Boot | Projeto desenvolvido como desafio final do bootcamp java com spring boot da Squadra
  * OpenAPI spec version: 1.0.0
  */
-
 export type ListarBairrosParams = {
   codigoBairro?: number
   codigoMunicipio?: number
@@ -90,12 +89,6 @@ export interface ListaMunicipioDTO {
   nome?: string
   status?: number
 }
-export interface ListaUFDTO {
-  codigoUF?: number
-  nome?: string
-  sigla?: string
-  status?: number
-}
 
 export interface AtualizacaoMunicipioDTO {
   codigoMunicipio: number
@@ -108,7 +101,7 @@ export interface AtualizacaoMunicipioDTO {
 export interface EnderecoDTO {
   cep: string
   codigoBairro: number
-  complemento?: string
+  complemento?: string | null
   nomeRua: string
   numero: string
 }
@@ -119,7 +112,7 @@ export interface PessoaDTO {
    * @minimum 1
    * @maximum 150
    */
-  idade: number
+  idade: number | string
   login: string
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
@@ -145,7 +138,7 @@ export interface AtualizacaoEnderecoDTO {
   codigoBairro: number
   codigoEndereco?: number
   codigoPessoa: number
-  complemento?: string
+  complemento?: string | null
   nomeRua: string
   numero: string
 }
@@ -167,6 +160,13 @@ export interface AtualizacaoPessoaDTO {
   status: number
 }
 
+export interface ListaUFDTO {
+  codigoUF?: number
+  nome?: string
+  sigla?: string
+  status?: number
+}
+
 export interface AtualizacaoUFDTO {
   codigoUF: number
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
@@ -182,12 +182,13 @@ export interface DetalhamentoEnderecoDTO {
   codigoBairro?: number
   codigoEndereco?: number
   codigoPessoa?: number
-  complemento?: string
+  complemento?: string | null
   municipio?: ListaMunicipioDTO
   nomeRua?: string
   numero?: string
   uf?: ListaUFDTO
 }
+
 export interface DetalhamentoPessoaDTO {
   codigoPessoa?: number
   enderecos?: DetalhamentoEnderecoDTO[]

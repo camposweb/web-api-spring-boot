@@ -461,6 +461,7 @@ export function SavePessoa() {
                                 <FormControl>
                                   <Input
                                     {...field}
+                                    value={field.value ?? ''}
                                     placeholder="Digite o complemento(Opcional)"
                                   />
                                 </FormControl>
