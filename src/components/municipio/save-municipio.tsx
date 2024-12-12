@@ -37,7 +37,7 @@ import { Switch } from '../ui/switch'
 import { Plus } from 'lucide-react'
 
 const saveMunicipioSchema = z.object({
-  codigoUf: z.union([
+  codigoUF: z.union([
     z.string().min(1, { message: 'Selecione uma UF' }),
     z.number().min(1, { message: 'Selecione uma UF' }),
   ]),
@@ -64,7 +64,7 @@ export function SaveMunicipio() {
   const formSaveMunicipio = useForm<SaveMunicipioSchema>({
     resolver: zodResolver(saveMunicipioSchema),
     defaultValues: {
-      codigoUf: '',
+      codigoUF: '',
       nome: '',
       status: 1,
     },
@@ -86,7 +86,7 @@ export function SaveMunicipio() {
   async function onSubmit(data: SaveMunicipioSchema) {
     try {
       await cadastrarMunicipioFn({
-        codigoUf: Number(data.codigoUf),
+        codigoUF: Number(data.codigoUF),
         nome: data.nome,
         status: data.status,
       })
@@ -148,7 +148,7 @@ export function SaveMunicipio() {
             >
               <FormField
                 control={formSaveMunicipio.control}
-                name="codigoUf"
+                name="codigoUF"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex text-base">UF</FormLabel>
@@ -168,8 +168,8 @@ export function SaveMunicipio() {
                             ) // Ordena pela sigla em ordem alfabética
                             .map((uf) => (
                               <SelectItem
-                                key={uf.codigoUf}
-                                value={String(uf.codigoUf)}
+                                key={uf.codigoUF}
+                                value={String(uf.codigoUF)}
                                 className="hover:cursor-pointer"
                               >
                                 {uf.sigla}

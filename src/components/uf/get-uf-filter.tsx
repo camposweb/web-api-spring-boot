@@ -25,7 +25,7 @@ interface GetUfFilterProps {
 }
 
 const getUfFilterSchema = z.object({
-  codigoUf: z
+  codigoUF: z
     .union([z.string(), z.number(), z.null(), z.undefined()])
     .optional()
     .transform((val) => {
@@ -75,7 +75,7 @@ export function GetUfFilter() {
   const formFilter = useForm<GetUfFilterSchema>({
     resolver: zodResolver(getUfFilterSchema),
     defaultValues: {
-      codigoUf: undefined,
+      codigoUF: undefined,
       sigla: '',
       nome: '',
       status: 'all',
@@ -125,7 +125,7 @@ export function GetUfFilter() {
 
   function handleClearFilter() {
     formFilter.reset({
-      codigoUf: undefined, // Força o valor inicial para códigoUF
+      codigoUF: undefined, // Força o valor inicial para códigoUF
       sigla: '',
       nome: '',
       status: 'all',
@@ -156,7 +156,7 @@ export function GetUfFilter() {
         >
           <FormField
             control={formFilter.control}
-            name="codigoUf"
+            name="codigoUF"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -172,7 +172,7 @@ export function GetUfFilter() {
                         field.onChange(valor === '' ? undefined : numero)
                       }
                     }}
-                    placeholder="codigoUf"
+                    placeholder="codigoUF"
                   />
                 </FormControl>
                 <FormMessage />

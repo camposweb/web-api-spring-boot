@@ -33,8 +33,8 @@ export default function Municipio() {
     codigoMunicipio: searchParams.get('codigoMunicipio')
       ? Number(searchParams.get('codigoMunicipio'))
       : undefined,
-    codigoUf: searchParams.get('codigoUf')
-      ? Number(searchParams.get('codigoUf'))
+    codigoUF: searchParams.get('codigoUF')
+      ? Number(searchParams.get('codigoUF'))
       : undefined,
     nome: searchParams.get('nome') || undefined,
     status: (() => {
@@ -120,12 +120,12 @@ export default function Municipio() {
                             {municipio.codigoMunicipio}
                           </TableCell>
                           <TableCell className="items-center justify-center">
-                            {municipio.codigoUf}
+                            {municipio.codigoUF}
                           </TableCell>
                           <TableCell className="items-center justify-center">
                             {ufs?.data
                               .filter(
-                                (uf) => uf.codigoUf === municipio.codigoUf,
+                                (uf) => uf.codigoUF === municipio.codigoUF,
                               )
                               .map((uf) => uf.sigla)}
                           </TableCell>
@@ -147,7 +147,7 @@ export default function Municipio() {
                           <TableCell className="flex justify-end gap-4 text-left">
                             <EditMunicipio
                               codigoMunicipio={municipio.codigoMunicipio}
-                              codigoUf={municipio.codigoUf}
+                              codigoUF={municipio.codigoUF}
                               nomeMunicipio={municipio.nome}
                               statusMunicipio={municipio.status}
                             />

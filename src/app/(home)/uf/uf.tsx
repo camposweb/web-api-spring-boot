@@ -29,8 +29,8 @@ export default function Uf() {
   const queryClient = useQueryClient()
 
   const filters = {
-    codigoUf: searchParams.get('codigoUf')
-      ? Number(searchParams.get('codigoUf'))
+    codigoUF: searchParams.get('codigoUF')
+      ? Number(searchParams.get('codigoUF'))
       : undefined,
     sigla: searchParams.get('sigla') || undefined,
     nome: searchParams.get('nome') || undefined,
@@ -102,9 +102,9 @@ export default function Uf() {
                   <TableBody>
                     {paginateditems &&
                       paginateditems.map((uf) => (
-                        <TableRow key={uf.codigoUf}>
+                        <TableRow key={uf.codigoUF}>
                           <TableCell className="items-center justify-center">
-                            {uf.codigoUf}
+                            {uf.codigoUF}
                           </TableCell>
                           <TableCell>{uf.sigla}</TableCell>
                           <TableCell>{uf.nome}</TableCell>
@@ -124,13 +124,13 @@ export default function Uf() {
                           </TableCell>
                           <TableCell className="flex justify-end gap-4 text-left">
                             <EditUf
-                              codigoUf={uf.codigoUf}
+                              codigoUF={uf.codigoUF}
                               siglaUf={uf.sigla}
                               nomeUf={uf.nome}
                               statusUf={uf.status}
                             />
                             <ConfirmDeleteUf
-                              codigo={uf.codigoUf as number}
+                              codigo={uf.codigoUF as number}
                               nome={uf.nome as string}
                             />
                           </TableCell>

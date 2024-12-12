@@ -29,7 +29,7 @@ import { Input } from '../ui/input'
 import { Switch } from '../ui/switch'
 
 export interface EditUfProps {
-  codigoUf?: number
+  codigoUF?: number
   siglaUf?: string
   nomeUf?: string
   statusUf?: number
@@ -43,7 +43,7 @@ interface EditDataProps {
 }
 
 const editUfSchema = z.object({
-  codigo: z.number().min(1, { message: 'Dever conter o codigoUf' }),
+  codigo: z.number().min(1, { message: 'Dever conter o codigoUF' }),
   sigla: z.string().regex(/^[a-zA-Z]{1,3}$/, {
     message: 'Dever conter apenas letras de no máximo 3 caracteres',
   }),
@@ -55,7 +55,7 @@ const editUfSchema = z.object({
 
 type EditUfSchema = z.infer<typeof editUfSchema>
 
-export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
+export function EditUf({ codigoUF, siglaUf, nomeUf, statusUf }: EditUfProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   // const statusString = status
   const statusBoolean =
@@ -64,7 +64,7 @@ export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
   const form = useForm<EditUfSchema>({
     resolver: zodResolver(editUfSchema),
     defaultValues: {
-      codigo: codigoUf,
+      codigo: codigoUF,
       sigla: siglaUf,
       nome: nomeUf,
       // statusUf: statusString,
@@ -92,7 +92,7 @@ export function EditUf({ codigoUf, siglaUf, nomeUf, statusUf }: EditUfProps) {
     try {
       data.status = data.status ? 1 : 2
       await atualizarUfFn({
-        codigoUf: data.codigo,
+        codigoUF: data.codigo,
         sigla: data.sigla,
         nome: data.nome,
         status: data.status,

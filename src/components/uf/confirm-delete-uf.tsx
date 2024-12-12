@@ -64,7 +64,7 @@ export function ConfirmDeleteUf({ codigo, nome }: ConfirmDeleteProps) {
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              deletarUfFn({ codigoUf: codigo })
+              deletarUfFn({ codigoUF: codigo })
             }}
             className="bg-red-600 hover:bg-red-600/80"
           >

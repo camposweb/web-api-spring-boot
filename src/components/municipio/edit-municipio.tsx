@@ -37,7 +37,7 @@ import { Switch } from '../ui/switch'
 
 interface EditMunicipioProps {
   codigoMunicipio?: number
-  codigoUf?: number
+  codigoUF?: number
   nomeMunicipio?: string
   statusMunicipio?: number
 }
@@ -46,7 +46,7 @@ const editMunicipioSchema = z.object({
   codigoMunicipio: z
     .number()
     .min(1, { message: 'Dever conter o codigoMunicipio' }),
-  codigoUf: z.union([
+  codigoUF: z.union([
     z.string().min(1, { message: 'Selecione uma UF' }),
     z.number().min(1, { message: 'Selecione uma UF' }),
   ]),
@@ -68,7 +68,7 @@ type EditMunicipioSchema = z.infer<typeof editMunicipioSchema>
 
 export function EditMunicipio({
   codigoMunicipio,
-  codigoUf,
+  codigoUF,
   nomeMunicipio,
   statusMunicipio,
 }: EditMunicipioProps) {
@@ -79,7 +79,7 @@ export function EditMunicipio({
     resolver: zodResolver(editMunicipioSchema),
     defaultValues: {
       codigoMunicipio,
-      codigoUf,
+      codigoUF,
       nome: nomeMunicipio,
       status: statusMunicipio,
     },
@@ -102,7 +102,7 @@ export function EditMunicipio({
     try {
       await atualizarMunicipioFn({
         codigoMunicipio: data.codigoMunicipio,
-        codigoUf: Number(data.codigoUf),
+        codigoUF: Number(data.codigoUF),
         nome: data.nome,
         status: data.status,
       })
@@ -154,7 +154,7 @@ export function EditMunicipio({
               />
               <FormField
                 control={formEditMunicipio.control}
-                name="codigoUf"
+                name="codigoUF"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex text-base">UF</FormLabel>
@@ -169,8 +169,8 @@ export function EditMunicipio({
                         <SelectContent sideOffset={5}>
                           {ufs?.data.map((uf) => (
                             <SelectItem
-                              key={uf.codigoUf}
-                              value={String(uf.codigoUf)}
+                              key={uf.codigoUF}
+                              value={String(uf.codigoUF)}
                               className="hover:cursor-pointer"
                             >
                               {uf.sigla}

@@ -14,7 +14,7 @@ export type ListarBairrosParams = {
 
 export type ListarMunicipiosParams = {
   codigoMunicipio?: number
-  codigoUf?: number
+  codigoUF?: number
   nome?: string
   status?: number
 }
@@ -26,7 +26,7 @@ export type ListarPessoasParams = {
 }
 
 export type ListarUfsParams = {
-  codigoUf?: number
+  codigoUF?: number
   sigla?: string
   nome?: string
   status?: number
@@ -45,7 +45,7 @@ export interface DeletarPessoaDTO {
 }
 
 export interface DeletarUfDTO {
-  codigoUf: number
+  codigoUF: number
 }
 
 export interface BairroDTO {
@@ -56,7 +56,7 @@ export interface BairroDTO {
 }
 
 export interface MunicipioDTO {
-  codigoUf: number
+  codigoUF: number
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
   status: number
@@ -87,14 +87,14 @@ export interface AtualizacaoBairroDTO {
 
 export interface ListaMunicipioDTO {
   codigoMunicipio?: number
-  codigoUf?: number
+  codigoUF?: number
   nome?: string
   status?: number
 }
 
 export interface AtualizacaoMunicipioDTO {
   codigoMunicipio: number
-  codigoUf: number
+  codigoUF: number
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
   status: number
@@ -163,7 +163,7 @@ export interface AtualizacaoPessoaDTO {
 }
 
 export interface AtualizacaoUfDTO {
-  codigoUf: number
+  codigoUF: number
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
@@ -171,7 +171,7 @@ export interface AtualizacaoUfDTO {
   status: number
 }
 export interface ListaUfDTO {
-  codigoUf?: number
+  codigoUF?: number
   nome?: string
   sigla?: string
   status?: number

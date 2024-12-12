@@ -141,7 +141,7 @@ export function DetailPessoa({
                           Código Município:{' '}
                           {endereco.municipio?.codigoMunicipio}
                         </span>
-                        <span>Código UF: {endereco.municipio?.codigoUf}</span>
+                        <span>Código UF: {endereco.municipio?.codigoUF}</span>
                         <span>Nome Município: {endereco.municipio?.nome}</span>
                         <span>
                           Status Município:{' '}
@@ -163,7 +163,7 @@ export function DetailPessoa({
                         <span>
                           <strong>UF: </strong>
                         </span>
-                        <span>Código UF: {endereco.uf?.codigoUf}</span>
+                        <span>Código UF: {endereco.uf?.codigoUF}</span>
                         <span>Sigla UF: {endereco.uf?.sigla}</span>
                         <span>Nome UF: {endereco.uf?.nome}</span>
                         <span>

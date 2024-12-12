@@ -18,7 +18,7 @@ import {
 
 const getMunicipioFilterSchema = z.object({
   codigoMunicipio: z.union([z.number(), z.string()]).optional(),
-  codigoUf: z.union([z.string(), z.number(), z.undefined()]).optional(),
+  codigoUF: z.union([z.string(), z.number(), z.undefined()]).optional(),
   nome: z
     .string()
     .optional()
@@ -53,7 +53,7 @@ export function GetMunicipioFilter() {
     resolver: zodResolver(getMunicipioFilterSchema),
     defaultValues: {
       codigoMunicipio: undefined,
-      codigoUf: undefined,
+      codigoUF: undefined,
       nome: undefined,
       status: undefined,
     },
@@ -139,7 +139,7 @@ export function GetMunicipioFilter() {
           />
           <FormField
             control={formFilterMunicipio.control}
-            name="codigoUf"
+            name="codigoUF"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -155,7 +155,7 @@ export function GetMunicipioFilter() {
                         field.onChange(valor === '' ? undefined : numero)
                       }
                     }}
-                    placeholder="codigoUf"
+                    placeholder="codigoUF"
                   />
                 </FormControl>
                 <FormMessage />
