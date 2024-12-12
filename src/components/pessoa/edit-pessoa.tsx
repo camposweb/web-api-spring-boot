@@ -37,7 +37,9 @@ const enderecoSchema = z.object({
   codigoBairro: z.string().min(1, 'Campo obrigatório'),
   nomeRua: z.string().min(1, 'Campo obrigatório'),
   numero: z.string().min(1, 'Campo obrigatório'),
-  complemento: z.string().max(20, { message: 'Até 20 caracteres' }),
+  complemento: z
+    .string()
+    .max(20, { message: 'Deve conter no máximo 20 caracteres' }),
   cep: z.string().min(1, 'Campo obrigatório'),
 })
 
@@ -49,7 +51,9 @@ const atualizarEndereco = z.object({
   codigoBairro: z.number().min(1, { message: 'Dever conter o codigoBairro' }),
   nomeRua: z.string().min(1, 'Campo obrigatório'),
   numero: z.string().min(1, 'Campo obrigatório'),
-  complemento: z.string().max(20, { message: 'Até 20 caracteres' }),
+  complemento: z
+    .string()
+    .max(20, { message: 'Deve conter no máximo 20 caracteres' }),
   cep: z.string().min(1, 'Campo obrigatório'),
 })
 
@@ -496,7 +500,10 @@ export function EditPessoa({
                               <FormItem>
                                 <FormLabel>Rua</FormLabel>
                                 <FormControl>
-                                  <Input {...field} />
+                                  <Input
+                                    {...field}
+                                    placeholder="Digite o nome da rua"
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -509,7 +516,10 @@ export function EditPessoa({
                               <FormItem>
                                 <FormLabel>Complemento</FormLabel>
                                 <FormControl>
-                                  <Input {...field} />
+                                  <Input
+                                    {...field}
+                                    placeholder="Digite o complemento(Opcional)"
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -522,7 +532,10 @@ export function EditPessoa({
                               <FormItem>
                                 <FormLabel>Número</FormLabel>
                                 <FormControl>
-                                  <Input {...field} />
+                                  <Input
+                                    {...field}
+                                    placeholder="Digite o número da rua"
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -535,7 +548,10 @@ export function EditPessoa({
                               <FormItem>
                                 <FormLabel>CEP</FormLabel>
                                 <FormControl>
-                                  <Input {...field} />
+                                  <Input
+                                    {...field}
+                                    placeholder="Digite o CEP"
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -618,7 +634,10 @@ export function EditPessoa({
                               <FormItem>
                                 <FormLabel>Complemento</FormLabel>
                                 <FormControl>
-                                  <Input {...field} placeholder="Complemento" />
+                                  <Input
+                                    {...field}
+                                    placeholder="Digite o complemento(Opcional)"
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>

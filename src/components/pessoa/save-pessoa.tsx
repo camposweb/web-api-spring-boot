@@ -70,7 +70,9 @@ const savePessoaSchema = z.object({
       codigoBairro: z.string().min(1, 'Campo obrigatório'),
       nomeRua: z.string().min(1, 'Campo obrigatório'),
       numero: z.string().min(1, 'Campo obrigatório'),
-      complemento: z.string(),
+      complemento: z
+        .string()
+        .max(20, { message: 'Deve conter no máximo 20 caracteres' }),
       cep: z.string().min(1, 'Campo obrigatório'),
     }),
   ),
@@ -457,7 +459,10 @@ export function SavePessoa() {
                               <FormItem>
                                 <FormLabel>Complemento</FormLabel>
                                 <FormControl>
-                                  <Input {...field} placeholder="Complemento" />
+                                  <Input
+                                    {...field}
+                                    placeholder="Digite o complemento(Opcional)"
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>

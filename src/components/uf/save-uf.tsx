@@ -1,5 +1,5 @@
 import { toast } from '@/hooks/use-toast'
-import { cadastrarUf } from '@/http/generated/uf/uf'
+import { cadastrarUF } from '@/http/generated/uf/uf'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -71,8 +71,8 @@ export function SaveUf() {
 
   const queryClient = useQueryClient()
 
-  const { mutateAsync: cadastrarUfFn } = useMutation({
-    mutationFn: cadastrarUf,
+  const { mutateAsync: cadastrarUFFn } = useMutation({
+    mutationFn: cadastrarUF,
     async onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ['ufs'],
@@ -89,7 +89,7 @@ export function SaveUf() {
   async function onSubmit(data: SaveUfSchema) {
     try {
       data.status = data.status ? 1 : 2
-      await cadastrarUfFn({
+      await cadastrarUFFn({
         sigla: data.sigla,
         nome: data.nome,
         status: data.status,

@@ -25,7 +25,7 @@ export default function Home() {
       </p>
       <p className="mt-4">
         O projeto Front End foi desenvolvido com as seguintes tecnologias:
-        NextJS 14, React Query para gereciamento de estado, ZOD para validação
+        NextJS 14, React Query para gerenciamento de estado, ZOD para validação
         de formulários e Shadcn/ui para desenvolver os componentes com um visual
         pré-definido ajudando no desenvimento mais eficiente da aplicação.
       </p>

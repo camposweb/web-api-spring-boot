@@ -92,7 +92,7 @@ export function DetailPessoa({
                   >
                     <section className="mb-2 flex flex-col rounded-md border p-2">
                       <span>
-                        <strong>Endereco:</strong> {endereco.codigoBairro}
+                        <strong>Endereco:</strong> {endereco.codigoEndereco}
                       </span>
                       <span>
                         <strong>Rua:</strong> {endereco.nomeRua}

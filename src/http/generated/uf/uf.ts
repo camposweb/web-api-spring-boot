@@ -22,17 +22,17 @@ import type {
 import axios from 'axios'
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type {
-  AtualizacaoUfDTO,
-  DeletarUfDTO,
-  ListaUfDTO,
+  AtualizacaoUFDTO,
+  DeletarUFDTO,
+  ListaUFDTO,
   ListarUfsParams,
-  UfDTO,
+  Ufdto,
 } from '../api.schemas'
 
 export const listarUfs = (
   params?: ListarUfsParams,
   options?: AxiosRequestConfig,
-): Promise<AxiosResponse<ListaUfDTO[]>> => {
+): Promise<AxiosResponse<ListaUFDTO[]>> => {
   return axios.get(`http://146.235.29.16:8080/uf`, {
     ...options,
     params: { ...params, ...options?.params },
@@ -151,201 +151,201 @@ export function useListarUfs<
   return query
 }
 
-export const atualizarUf = (
-  atualizacaoUfDTO: AtualizacaoUfDTO,
+export const atualizarUF = (
+  atualizacaoUFDTO: AtualizacaoUFDTO,
   options?: AxiosRequestConfig,
-): Promise<AxiosResponse<ListaUfDTO[]>> => {
-  return axios.put(`http://146.235.29.16:8080/uf`, atualizacaoUfDTO, options)
+): Promise<AxiosResponse<ListaUFDTO[]>> => {
+  return axios.put(`http://146.235.29.16:8080/uf`, atualizacaoUFDTO, options)
 }
 
-export const getAtualizarUfMutationOptions = <
+export const getAtualizarUFMutationOptions = <
   TError = AxiosError<unknown>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof atualizarUf>>,
+    Awaited<ReturnType<typeof atualizarUF>>,
     TError,
-    { data: AtualizacaoUfDTO },
+    { data: AtualizacaoUFDTO },
     TContext
   >
   axios?: AxiosRequestConfig
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof atualizarUf>>,
+  Awaited<ReturnType<typeof atualizarUF>>,
   TError,
-  { data: AtualizacaoUfDTO },
+  { data: AtualizacaoUFDTO },
   TContext
 > => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof atualizarUf>>,
-    { data: AtualizacaoUfDTO }
+    Awaited<ReturnType<typeof atualizarUF>>,
+    { data: AtualizacaoUFDTO }
   > = (props) => {
     const { data } = props ?? {}
 
-    return atualizarUf(data, axiosOptions)
+    return atualizarUF(data, axiosOptions)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type AtualizarUfMutationResult = NonNullable<
-  Awaited<ReturnType<typeof atualizarUf>>
+export type AtualizarUFMutationResult = NonNullable<
+  Awaited<ReturnType<typeof atualizarUF>>
 >
-export type AtualizarUfMutationBody = AtualizacaoUfDTO
-export type AtualizarUfMutationError = AxiosError<unknown>
+export type AtualizarUFMutationBody = AtualizacaoUFDTO
+export type AtualizarUFMutationError = AxiosError<unknown>
 
-export const useAtualizarUf = <
+export const useAtualizarUF = <
   TError = AxiosError<unknown>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof atualizarUf>>,
+    Awaited<ReturnType<typeof atualizarUF>>,
     TError,
-    { data: AtualizacaoUfDTO },
+    { data: AtualizacaoUFDTO },
     TContext
   >
   axios?: AxiosRequestConfig
 }): UseMutationResult<
-  Awaited<ReturnType<typeof atualizarUf>>,
+  Awaited<ReturnType<typeof atualizarUF>>,
   TError,
-  { data: AtualizacaoUfDTO },
+  { data: AtualizacaoUFDTO },
   TContext
 > => {
-  const mutationOptions = getAtualizarUfMutationOptions(options)
+  const mutationOptions = getAtualizarUFMutationOptions(options)
 
   return useMutation(mutationOptions)
 }
-export const cadastrarUf = (
-  ufDTO: UfDTO,
+export const cadastrarUF = (
+  ufdto: Ufdto,
   options?: AxiosRequestConfig,
-): Promise<AxiosResponse<ListaUfDTO[]>> => {
-  return axios.post(`http://146.235.29.16:8080/uf`, ufDTO, options)
+): Promise<AxiosResponse<ListaUFDTO[]>> => {
+  return axios.post(`http://146.235.29.16:8080/uf`, ufdto, options)
 }
 
-export const getCadastrarUfMutationOptions = <
+export const getCadastrarUFMutationOptions = <
   TError = AxiosError<unknown>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof cadastrarUf>>,
+    Awaited<ReturnType<typeof cadastrarUF>>,
     TError,
-    { data: UfDTO },
+    { data: Ufdto },
     TContext
   >
   axios?: AxiosRequestConfig
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof cadastrarUf>>,
+  Awaited<ReturnType<typeof cadastrarUF>>,
   TError,
-  { data: UfDTO },
+  { data: Ufdto },
   TContext
 > => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof cadastrarUf>>,
-    { data: UfDTO }
+    Awaited<ReturnType<typeof cadastrarUF>>,
+    { data: Ufdto }
   > = (props) => {
     const { data } = props ?? {}
 
-    return cadastrarUf(data, axiosOptions)
+    return cadastrarUF(data, axiosOptions)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type CadastrarUfMutationResult = NonNullable<
-  Awaited<ReturnType<typeof cadastrarUf>>
+export type CadastrarUFMutationResult = NonNullable<
+  Awaited<ReturnType<typeof cadastrarUF>>
 >
-export type CadastrarUfMutationBody = UfDTO
-export type CadastrarUfMutationError = AxiosError<unknown>
+export type CadastrarUFMutationBody = Ufdto
+export type CadastrarUFMutationError = AxiosError<unknown>
 
-export const useCadastrarUf = <
+export const useCadastrarUF = <
   TError = AxiosError<unknown>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof cadastrarUf>>,
+    Awaited<ReturnType<typeof cadastrarUF>>,
     TError,
-    { data: UfDTO },
+    { data: Ufdto },
     TContext
   >
   axios?: AxiosRequestConfig
 }): UseMutationResult<
-  Awaited<ReturnType<typeof cadastrarUf>>,
+  Awaited<ReturnType<typeof cadastrarUF>>,
   TError,
-  { data: UfDTO },
+  { data: Ufdto },
   TContext
 > => {
-  const mutationOptions = getCadastrarUfMutationOptions(options)
+  const mutationOptions = getCadastrarUFMutationOptions(options)
 
   return useMutation(mutationOptions)
 }
-export const deletarUf = (
-  deletarUfDTO: DeletarUfDTO,
+export const deletarUF = (
+  deletarUFDTO: DeletarUFDTO,
   options?: AxiosRequestConfig,
-): Promise<AxiosResponse<ListaUfDTO[]>> => {
+): Promise<AxiosResponse<ListaUFDTO[]>> => {
   return axios.delete(`http://146.235.29.16:8080/uf`, {
-    data: deletarUfDTO,
+    data: deletarUFDTO,
     ...options,
   })
 }
 
-export const getDeletarUfMutationOptions = <
+export const getDeletarUFMutationOptions = <
   TError = AxiosError<unknown>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deletarUf>>,
+    Awaited<ReturnType<typeof deletarUF>>,
     TError,
-    { data: DeletarUfDTO },
+    { data: DeletarUFDTO },
     TContext
   >
   axios?: AxiosRequestConfig
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof deletarUf>>,
+  Awaited<ReturnType<typeof deletarUF>>,
   TError,
-  { data: DeletarUfDTO },
+  { data: DeletarUFDTO },
   TContext
 > => {
   const { mutation: mutationOptions, axios: axiosOptions } = options ?? {}
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof deletarUf>>,
-    { data: DeletarUfDTO }
+    Awaited<ReturnType<typeof deletarUF>>,
+    { data: DeletarUFDTO }
   > = (props) => {
     const { data } = props ?? {}
 
-    return deletarUf(data, axiosOptions)
+    return deletarUF(data, axiosOptions)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type DeletarUfMutationResult = NonNullable<
-  Awaited<ReturnType<typeof deletarUf>>
+export type DeletarUFMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deletarUF>>
 >
-export type DeletarUfMutationBody = DeletarUfDTO
-export type DeletarUfMutationError = AxiosError<unknown>
+export type DeletarUFMutationBody = DeletarUFDTO
+export type DeletarUFMutationError = AxiosError<unknown>
 
-export const useDeletarUf = <
+export const useDeletarUF = <
   TError = AxiosError<unknown>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deletarUf>>,
+    Awaited<ReturnType<typeof deletarUF>>,
     TError,
-    { data: DeletarUfDTO },
+    { data: DeletarUFDTO },
     TContext
   >
   axios?: AxiosRequestConfig
 }): UseMutationResult<
-  Awaited<ReturnType<typeof deletarUf>>,
+  Awaited<ReturnType<typeof deletarUF>>,
   TError,
-  { data: DeletarUfDTO },
+  { data: DeletarUFDTO },
   TContext
 > => {
-  const mutationOptions = getDeletarUfMutationOptions(options)
+  const mutationOptions = getDeletarUFMutationOptions(options)
 
   return useMutation(mutationOptions)
 }

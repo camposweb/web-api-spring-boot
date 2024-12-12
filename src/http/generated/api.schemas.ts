@@ -5,6 +5,7 @@
  * API para o Bootcamp Java - Spring Boot | Projeto desenvolvido como desafio final do bootcamp java com spring boot da Squadra
  * OpenAPI spec version: 1.0.0
  */
+
 export type ListarBairrosParams = {
   codigoBairro?: number
   codigoMunicipio?: number
@@ -44,13 +45,12 @@ export interface DeletarPessoaDTO {
   codigoPessoa: number
 }
 
-export interface DeletarUfDTO {
+export interface DeletarUFDTO {
   codigoUF: number
 }
 
 export interface BairroDTO {
   codigoMunicipio: number
-  /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
   status: number
 }
@@ -62,7 +62,7 @@ export interface MunicipioDTO {
   status: number
 }
 
-export interface UfDTO {
+export interface Ufdto {
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
@@ -80,7 +80,6 @@ export interface ListaBairroDTO {
 export interface AtualizacaoBairroDTO {
   codigoBairro: number
   codigoMunicipio: number
-  /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
   status: number
 }
@@ -89,6 +88,12 @@ export interface ListaMunicipioDTO {
   codigoMunicipio?: number
   codigoUF?: number
   nome?: string
+  status?: number
+}
+export interface ListaUFDTO {
+  codigoUF?: number
+  nome?: string
+  sigla?: string
   status?: number
 }
 
@@ -103,7 +108,7 @@ export interface AtualizacaoMunicipioDTO {
 export interface EnderecoDTO {
   cep: string
   codigoBairro: number
-  complemento: string
+  complemento?: string
   nomeRua: string
   numero: string
 }
@@ -140,7 +145,7 @@ export interface AtualizacaoEnderecoDTO {
   codigoBairro: number
   codigoEndereco?: number
   codigoPessoa: number
-  complemento?: string | undefined
+  complemento?: string
   nomeRua: string
   numero: string
 }
@@ -162,7 +167,7 @@ export interface AtualizacaoPessoaDTO {
   status: number
 }
 
-export interface AtualizacaoUfDTO {
+export interface AtualizacaoUFDTO {
   codigoUF: number
   /** @pattern ^[a-zA-ZÀ-ÖØ-öø-ÿÇç ]+$ */
   nome: string
@@ -170,25 +175,19 @@ export interface AtualizacaoUfDTO {
   sigla: string
   status: number
 }
-export interface ListaUfDTO {
-  codigoUF?: number
-  nome?: string
-  sigla?: string
-  status?: number
-}
+
 export interface DetalhamentoEnderecoDTO {
+  bairro?: ListaBairroDTO
+  cep?: string
+  codigoBairro?: number
   codigoEndereco?: number
   codigoPessoa?: number
-  codigoBairro?: number
+  complemento?: string
+  municipio?: ListaMunicipioDTO
   nomeRua?: string
   numero?: string
-  complemento?: string
-  cep?: string
-  bairro?: ListaBairroDTO
-  municipio?: ListaMunicipioDTO
-  uf?: ListaUfDTO
+  uf?: ListaUFDTO
 }
-
 export interface DetalhamentoPessoaDTO {
   codigoPessoa?: number
   enderecos?: DetalhamentoEnderecoDTO[]

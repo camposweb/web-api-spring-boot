@@ -1,6 +1,6 @@
 'use client'
 import { useToast } from '@/hooks/use-toast'
-import { deletarUf } from '@/http/generated/uf/uf'
+import { deletarUF } from '@/http/generated/uf/uf'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Trash2 } from 'lucide-react'
 import {
@@ -26,8 +26,8 @@ export function ConfirmDeleteUf({ codigo, nome }: ConfirmDeleteProps) {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
-  const { mutateAsync: deletarUfFn } = useMutation({
-    mutationFn: deletarUf,
+  const { mutateAsync: deletarUFFn } = useMutation({
+    mutationFn: deletarUF,
     async onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ['ufs'],
@@ -64,7 +64,7 @@ export function ConfirmDeleteUf({ codigo, nome }: ConfirmDeleteProps) {
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              deletarUfFn({ codigoUF: codigo })
+              deletarUFFn({ codigoUF: codigo })
             }}
             className="bg-red-600 hover:bg-red-600/80"
           >

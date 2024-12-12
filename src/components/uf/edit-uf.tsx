@@ -1,6 +1,6 @@
 'use client'
 import { toast } from '@/hooks/use-toast'
-import { atualizarUf } from '@/http/generated/uf/uf'
+import { atualizarUF } from '@/http/generated/uf/uf'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
@@ -74,8 +74,8 @@ export function EditUf({ codigoUF, siglaUf, nomeUf, statusUf }: EditUfProps) {
 
   const queryClient = useQueryClient()
 
-  const { mutateAsync: atualizarUfFn } = useMutation({
-    mutationFn: atualizarUf,
+  const { mutateAsync: atualizarUFFn } = useMutation({
+    mutationFn: atualizarUF,
     async onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ['ufs'],
@@ -91,7 +91,7 @@ export function EditUf({ codigoUF, siglaUf, nomeUf, statusUf }: EditUfProps) {
   async function onSubmit(data: EditDataProps) {
     try {
       data.status = data.status ? 1 : 2
-      await atualizarUfFn({
+      await atualizarUFFn({
         codigoUF: data.codigo,
         sigla: data.sigla,
         nome: data.nome,
